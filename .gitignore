@@ -92,4 +92,3 @@ htmlcov/
 
 # Local cache
 .cache/
-.env.example

@@ -1,15 +1,11 @@
 {
   "buildCommand": "python build.py",
   "outputDirectory": ".",
-  "builds": [
-    {
-      "src": "api/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["app/**", "migrations/**", "requirements.txt"]
-      }
+  "functions": {
+    "api/wsgi.py": {
+      "includeFiles": "app/**,migrations/**,requirements.txt"
     }
-  ],
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/wsgi.py" }],
   "headers": [
     {
