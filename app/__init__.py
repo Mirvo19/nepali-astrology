@@ -1,6 +1,11 @@
 from flask import Flask, render_template, session, request
 from .config import Config
-from .blueprints.site.routes import public_bp
+
+try:
+    from .blueprints.site.routes import public_bp
+except ModuleNotFoundError:
+    from .blueprints.public.routes import public_bp
+
 from .blueprints.bookings.routes import bookings_bp
 from .blueprints.admin.routes import admin_bp
 from .blueprints.api.routes import api_bp
