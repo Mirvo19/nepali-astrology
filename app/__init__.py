@@ -1,5 +1,8 @@
 from flask import Flask, render_template, session, request
+from pathlib import Path
 from .config import Config
+
+_PKG_DIR = Path(__file__).resolve().parent
 
 try:
     from .blueprints.site.routes import public_bp
@@ -26,7 +29,11 @@ def create_app():
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[logging.StreamHandler(sys.stdout)],
         )
-    app = Flask(__name__, static_folder="static", template_folder="templates")
+    app = Flask(
+        __name__,
+        static_folder=str(_PKG_DIR / "static"),
+        template_folder=str(_PKG_DIR / "templates"),
+    )
     app.config.from_object(Config)
     Config.validate()
     app.permanent_session_lifetime = app.config["PERMANENT_SESSION_LIFETIME"]
