@@ -3,19 +3,27 @@
   "buildCommand": "python scripts/vercel_build.py",
   "builds": [
     {
+      "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "app.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
         "runtime": "python3.12",
         "includeFiles": [
-          "application/templates/**",
-          "application/static/**"
+          "application/**",
+          "templates/**"
         ]
       }
     }
   ],
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "app.py"

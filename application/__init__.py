@@ -3,6 +3,19 @@ from pathlib import Path
 from .config import Config
 
 _PKG_DIR = Path(__file__).resolve().parent
+_ROOT_DIR = _PKG_DIR.parent
+
+
+def _resolve_dir(name: str) -> str:
+    """Prefer package paths; fall back to repo root (Vercel build copies templates/ there)."""
+    primary = _PKG_DIR / name
+    if primary.is_dir():
+        return str(primary)
+    fallback = _ROOT_DIR / name
+    if fallback.is_dir():
+        return str(fallback)
+    return str(primary)
+
 
 try:
     from .blueprints.site.routes import public_bp
@@ -31,8 +44,8 @@ def create_app():
         )
     app = Flask(
         __name__,
-        static_folder=str(_PKG_DIR / "static"),
-        template_folder=str(_PKG_DIR / "templates"),
+        static_folder=_resolve_dir("static"),
+        template_folder=_resolve_dir("templates"),
     )
     app.config.from_object(Config)
     Config.validate()
