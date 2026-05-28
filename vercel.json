@@ -17,10 +17,7 @@
   ],
   "functions": {
     "app.py": {
-      "includeFiles": [
-        "application/templates/**",
-        "application/static/**"
-      ]
+      "includeFiles": "application/{templates,static}/**"
     }
   },
   "routes": [
