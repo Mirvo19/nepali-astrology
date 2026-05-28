@@ -3,7 +3,6 @@
   "outputDirectory": ".",
   "functions": {
     "wsgi.py": {
-      "runtime": "@vercel/python",
       "includeFiles": "app/**"
     }
   },
