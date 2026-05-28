@@ -23,6 +23,15 @@ def create_app():
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(Config)
 
+    # Warn when running with the default secret key; require FLASK_SECRET_KEY in prod.
+    if app.config.get("SECRET_KEY", "").startswith("dev_"):
+        logger.warning("Using default SECRET_KEY; set FLASK_SECRET_KEY in environment for production.")
+
+    # If running on Vercel, explicitly avoid filesystem session config
+    if os.getenv("VERCEL") == "1":
+        app.config["SESSION_TYPE"] = None
+        logger.info("Running on Vercel: SESSION_TYPE set to None (using Flask signed cookie sessions).")
+
     # Use signed cookie sessions on Vercel; filesystem sessions are not reliable there.
     if os.getenv("VERCEL") != "1":
         try:
@@ -35,11 +44,15 @@ def create_app():
 
     app.jinja_env.globals["bust"] = bust
 
-    # Register blueprints
-    app.register_blueprint(public_bp)
-    app.register_blueprint(bookings_bp)
-    app.register_blueprint(admin_bp)
-    app.register_blueprint(api_bp)
+    # Register blueprints (raise on failure with full trace)
+    try:
+        app.register_blueprint(public_bp)
+        app.register_blueprint(bookings_bp)
+        app.register_blueprint(admin_bp)
+        app.register_blueprint(api_bp)
+    except Exception as e:
+        logger.error("Failed to register blueprints", exc_info=True)
+        raise
 
     @app.context_processor
     def inject_globals():
