@@ -2,11 +2,11 @@
   "buildCommand": "python build.py",
   "outputDirectory": ".",
   "functions": {
-    "api/wsgi.py": {
+    "api/*.py": {
       "includeFiles": "app/**,migrations/**,requirements.txt"
     }
   },
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/wsgi.py" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.py" }],
   "headers": [
     {
       "source": "/static/(.*)",
