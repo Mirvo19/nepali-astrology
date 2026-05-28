@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+{% block title %}Availability{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="get">
+    <select name="astrologer_id" onchange="this.form.submit()">
+      {% for astro in astrologers %}
+      <option value="{{ astro.id }}" {% if selected_id==astro.id %}selected{% endif %}>{{ astro.name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+</section>
+<section class="admin-section">
+  <h2>Weekly schedule</h2>
+  <form method="post" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="hidden" name="action" value="availability" />
+    <input type="hidden" name="astrologer_id" value="{{ selected_id }}" />
+    <select name="day_of_week">
+      <option value="0">Sunday</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option>
+    </select>
+    <input type="time" name="start_time" required />
+    <input type="time" name="end_time" required />
+    <button class="btn-primary" type="submit">Add</button>
+  </form>
+  <ul class="admin-list">
+    {% for item in availability %}
+    <li>{{ item.day_of_week }}: {{ item.start_time }} - {{ item.end_time }}
+      <form method="post" action="/admin/availability/delete">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <input type="hidden" name="availability_id" value="{{ item.id }}" />
+        <button class="btn-outline" type="submit">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="admin-section">
+  <h2>Blocked dates</h2>
+  <form method="post" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="hidden" name="action" value="blocked" />
+    <input type="hidden" name="astrologer_id" value="{{ selected_id }}" />
+    <input type="date" name="blocked_date" required />
+    <input type="text" name="reason" placeholder="Reason" />
+    <button class="btn-primary" type="submit">Add</button>
+  </form>
+  <ul class="admin-list">
+    {% for item in blocked_dates %}
+    <li>{{ item.blocked_date }} - {{ item.reason }}
+      <form method="post" action="/admin/blocked/delete">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <input type="hidden" name="blocked_id" value="{{ item.id }}" />
+        <button class="btn-outline" type="submit">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

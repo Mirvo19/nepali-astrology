@@ -1,0 +1,47 @@
+{% extends 'admin/base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block title %}Testimonials{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="post" enctype="multipart/form-data" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="client_name" placeholder="Client name" required />
+    <input type="text" name="client_location" placeholder="Location" />
+    <textarea name="content" placeholder="Testimonial" required></textarea>
+    <input type="number" name="rating" min="1" max="5" placeholder="Rating" />
+    <label><input type="checkbox" name="is_visible" checked /> Visible</label>
+    <div class="upload-zone">
+      <input type="file" name="avatar" accept="image/*" />
+    </div>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Rating</th><th>Visible</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for item in testimonials %}
+        <tr>
+          <td><strong>{{ item.client_name }}</strong></td>
+          <td>{{ item.rating }}</td>
+          <td><span class="badge badge-neutral">{{ item.is_visible }}</span></td>
+          <td>
+            <form method="post" action="/admin/testimonials/delete">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <input type="hidden" name="testimonial_id" value="{{ item.id }}" />
+              <div class="action-icons">
+                <button class="icon-btn" type="submit" aria-label="Delete">{{ icon('trash', size=16) }}</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

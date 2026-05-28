@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section confirm" data-reveal>
+    <div class="container">
+      <p class="section-label">confirmed</p>
+      <h1 class="section-heading">Booking Confirmed</h1>
+      <p>Thank you, {{ booking.client_name }}. Your session is confirmed.</p>
+      <div class="summary-card">
+        <p>Reference: {{ booking.booking_ref }}</p>
+        <p>Date: {{ booking.appointment_date }}</p>
+        <p>Time: {{ booking.appointment_time[:5] }}</p>
+        <a class="btn-secondary" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nepali%20Astrology%20Session&dates={{ booking.appointment_date }}T{{ booking.appointment_time[:5]|replace(':','') }}00/{{ booking.appointment_date }}T{{ booking.appointment_time[:5]|replace(':','') }}00">Add to Google Calendar</a>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

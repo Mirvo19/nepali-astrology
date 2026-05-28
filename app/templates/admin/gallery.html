@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="post" enctype="multipart/form-data" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="caption" placeholder="Caption" />
+    <input type="number" name="sort_order" placeholder="Sort order" />
+    <label><input type="checkbox" name="is_visible" checked /> Visible</label>
+    <div class="upload-zone">
+      <input type="file" name="image" accept="image/*" required />
+    </div>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Upload</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <div class="gallery-grid">
+    {% for item in gallery %}
+    <div class="gallery-card">
+      <img src="{{ item.image_url }}" alt="{{ item.caption }}" loading="lazy" width="320" height="240" />
+      <p>{{ item.caption }}</p>
+      <form method="post" action="/admin/gallery/delete">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <input type="hidden" name="gallery_id" value="{{ item.id }}" />
+        <button class="btn-outline" type="submit">Delete</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

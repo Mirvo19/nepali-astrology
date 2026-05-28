@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section checkout" data-reveal>
+    <div class="container">
+      <p class="section-label">checkout</p>
+      <h1 class="section-heading">Checkout</h1>
+      <div class="section-divider"></div>
+      <div class="summary-card">
+        <p>Booking reference: {{ booking.booking_ref }}</p>
+        <p>Date: {{ booking.appointment_date }}</p>
+        <p>Time: {{ booking.appointment_time }}</p>
+        <p>Amount: रू {{ booking.amount_npr }}</p>
+        <button class="btn-primary" disabled>Proceed to payment (Stripe placeholder)</button>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

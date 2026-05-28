@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section" data-reveal>
+    <div class="container">
+      {% if astrologer %}
+      <div class="profile">
+        <div>
+          <div class="profile-photo">
+            <img src="{{ astrologer.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astrologer.name }}" loading="lazy" width="360" height="480" />
+          </div>
+          <div class="profile-card">
+            <h1 class="section-heading">{{ astrologer.name }}</h1>
+            <p class="astro-title">{{ astrologer.title }}</p>
+            <p>{{ astrologer.bio }}</p>
+            <div class="hero-stats">
+              {% for language in astrologer.languages %}
+              <span class="badge badge-neutral">{{ language }}</span>
+              {% endfor %}
+              <span class="badge badge-gold">{{ astrologer.experience_years }} years</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="section-label">services</p>
+          <h2 class="section-heading">Consultations</h2>
+          <div class="section-divider"></div>
+          <div class="card-grid">
+            {% for service in services %}
+            <div class="service-card">
+              <div>
+                <h4>{{ service.name }}</h4>
+                <p class="service-description">{{ service.description }}</p>
+                <span class="badge badge-neutral">{{ service.duration_minutes }} mins</span>
+              </div>
+              <div>
+                <div class="service-price">रू {{ service.price_npr }}</div>
+                <a class="btn-secondary" href="/book/{{ astrologer.slug }}/{{ service.id }}">Book</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "{{ astrologer.name }}",
+        "jobTitle": "{{ astrologer.title }}",
+        "image": "{{ astrologer.photo_url }}",
+        "url": "https://nepaliastrology.com/astrologers/{{ astrologer.slug }}"
+      }
+      </script>
+      <div class="availability" data-astrologer="{{ astrologer.id }}" data-service="{{ services[0].id if services else '' }}"></div>
+      {% else %}
+      <p>Astrologer not found.</p>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

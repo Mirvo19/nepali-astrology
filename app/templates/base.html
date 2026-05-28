@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ seo.meta_title }} | nepaliastrology.com</title>
+  <meta name="description" content="{{ seo.meta_description }}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="{{ seo.site_url }}{{ seo.current_path }}" />
+  <meta property="og:title" content="{{ seo.meta_title }}" />
+  <meta property="og:description" content="{{ seo.meta_description }}" />
+  <meta property="og:image" content="{{ seo.og_image }}" />
+  <meta property="og:url" content="{{ seo.site_url }}{{ seo.current_path }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_NP" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "nepali astrology",
+    "url": "https://nepaliastrology.com",
+    "telephone": "{{ seo.contact_phone }}",
+    "address": { "@type": "PostalAddress", "addressCountry": "NP" },
+    "image": "{{ seo.og_image }}"
+  }
+  </script>
+  <link rel="stylesheet" href="{{ bust('css/main.css') }}" />
+  <link rel="icon" href="{{ bust('assets/favicon.ico') }}" />
+</head>
+<body class="page-transition loading">
+  {% include 'partials/icons.html' %}
+  <div class="page-fade"></div>
+  <header class="site-header" id="site-header">
+    <nav class="nav container">
+      <a class="logo" href="/">{{ site_settings.site_name or 'Nepali Astrology' }}</a>
+      <div class="nav-links" id="nav-links">
+        <a href="/astrologers">Astrologers</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </div>
+      <a class="nav-cta" href="/astrologers">Book a Reading</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul>
+      <li><a href="/" data-delay="0">Home</a></li>
+      <li><a href="/astrologers" data-delay="1">Astrologers</a></li>
+      <li><a href="/blog" data-delay="2">Blog</a></li>
+      <li><a href="/about" data-delay="3">About</a></li>
+      <li><a href="/contact" data-delay="4">Contact</a></li>
+    </ul>
+  </div>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content container">
+      <div>
+        <h4>{{ site_settings.site_name or 'Nepali Astrology' }}</h4>
+        <p>{{ site_settings.footer_text }}</p>
+      </div>
+      <div>
+        <p>{{ site_settings.contact_address }}</p>
+        <p>{{ site_settings.contact_phone }}</p>
+        <p>{{ site_settings.contact_email }}</p>
+      </div>
+      <div class="footer-social">
+        <a href="{{ site_settings.facebook_url or '#' }}">Facebook</a>
+        <a href="{{ site_settings.instagram_url or '#' }}">Instagram</a>
+        <a href="{{ site_settings.youtube_url or '#' }}">YouTube</a>
+      </div>
+    </div>
+    <form class="newsletter container" aria-label="Newsletter">
+      <input type="email" placeholder="Your email" />
+      <button type="button" class="btn-primary">Join</button>
+    </form>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/{{ site_settings.whatsapp_number|replace('+','') }}" aria-label="WhatsApp chat">
+    {% from 'macros/icon.html' import icon %}
+    {{ icon('whatsapp', size=20) }}
+  </a>
+
+  <script>
+    window.csrfToken = "{{ csrf_token }}";
+  </script>
+  <script src="{{ bust('js/main.js') }}" defer></script>
+  <script src="{{ bust('js/partial-refresh.js') }}" defer></script>
+</body>
+</html>

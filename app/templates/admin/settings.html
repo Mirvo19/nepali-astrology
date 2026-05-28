@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+{% block title %}Site Settings{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="post" enctype="multipart/form-data" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="site_name" placeholder="Site name" value="{{ site_settings.site_name }}" />
+    <input type="text" name="tagline" placeholder="Tagline" value="{{ site_settings.tagline }}" />
+    <input type="text" name="hero_heading" placeholder="Hero heading" value="{{ site_settings.hero_heading }}" />
+    <input type="text" name="hero_subheading" placeholder="Hero subheading" value="{{ site_settings.hero_subheading }}" />
+    <input type="text" name="hero_cta_text" placeholder="Hero CTA" value="{{ site_settings.hero_cta_text }}" />
+    <textarea name="about_text" placeholder="About text">{{ site_settings.about_text }}</textarea>
+    <input type="file" name="about_image_url" accept="image/*" />
+    <input type="text" name="contact_email" placeholder="Contact email" value="{{ site_settings.contact_email }}" />
+    <input type="text" name="contact_phone" placeholder="Contact phone" value="{{ site_settings.contact_phone }}" />
+    <input type="text" name="contact_address" placeholder="Contact address" value="{{ site_settings.contact_address }}" />
+    <input type="text" name="whatsapp_number" placeholder="WhatsApp" value="{{ site_settings.whatsapp_number }}" />
+    <input type="text" name="facebook_url" placeholder="Facebook URL" value="{{ site_settings.facebook_url }}" />
+    <input type="text" name="instagram_url" placeholder="Instagram URL" value="{{ site_settings.instagram_url }}" />
+    <input type="text" name="youtube_url" placeholder="YouTube URL" value="{{ site_settings.youtube_url }}" />
+    <input type="text" name="meta_title" placeholder="Meta title" value="{{ site_settings.meta_title }}" />
+    <textarea name="meta_description" placeholder="Meta description">{{ site_settings.meta_description }}</textarea>
+    <input type="file" name="og_image_url" accept="image/*" />
+    <input type="text" name="footer_text" placeholder="Footer text" value="{{ site_settings.footer_text }}" />
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save settings</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

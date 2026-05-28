@@ -1,0 +1,42 @@
+{% extends 'admin/base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block title %}FAQs{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="post" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="question" placeholder="Question" required />
+    <textarea name="answer" placeholder="Answer" required></textarea>
+    <input type="number" name="sort_order" placeholder="Sort order" />
+    <label><input type="checkbox" name="is_visible" checked /> Visible</label>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Question</th><th>Visible</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for item in faqs %}
+        <tr>
+          <td><strong>{{ item.question }}</strong></td>
+          <td><span class="badge badge-neutral">{{ item.is_visible }}</span></td>
+          <td>
+            <form method="post" action="/admin/faqs/delete">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <input type="hidden" name="faq_id" value="{{ item.id }}" />
+              <div class="action-icons">
+                <button class="icon-btn" type="submit" aria-label="Delete">{{ icon('trash', size=16) }}</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

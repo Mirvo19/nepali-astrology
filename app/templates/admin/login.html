@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login | Nepali Astrology</title>
+  <link rel="stylesheet" href="{{ bust('css/admin.css') }}" />
+</head>
+<body class="admin-login">
+  <form class="login-card" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <h1>Admin Login</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button class="btn-primary" type="submit">Sign in</button>
+  </form>
+</body>
+</html>

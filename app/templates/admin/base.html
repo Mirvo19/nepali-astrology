@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin | Nepali Astrology</title>
+  <link rel="stylesheet" href="{{ bust('css/admin.css') }}" />
+</head>
+<body>
+  {% include 'partials/icons.html' %}
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <a class="admin-logo" href="/admin">Nepali Astrology</a>
+      <div class="admin-nav-section">Manage</div>
+      <nav>
+        <a href="/admin" data-nav="/admin">Dashboard</a>
+        <a href="/admin/bookings" data-nav="/admin/bookings">Bookings</a>
+        <a href="/admin/astrologers" data-nav="/admin/astrologers">Astrologers</a>
+        <a href="/admin/services" data-nav="/admin/services">Services</a>
+        <a href="/admin/availability" data-nav="/admin/availability">Availability</a>
+      </nav>
+      <div class="admin-nav-section">Content</div>
+      <nav>
+        <a href="/admin/testimonials" data-nav="/admin/testimonials">Testimonials</a>
+        <a href="/admin/faqs" data-nav="/admin/faqs">FAQs</a>
+        <a href="/admin/blog" data-nav="/admin/blog">Blog</a>
+        <a href="/admin/gallery" data-nav="/admin/gallery">Gallery</a>
+      </nav>
+      <div class="admin-nav-section">Settings</div>
+      <nav>
+        <a href="/admin/settings" data-nav="/admin/settings">Site Settings</a>
+        <a href="/admin/logout">Logout</a>
+      </nav>
+    </aside>
+    <div class="admin-sidebar-backdrop" id="admin-sidebar-backdrop"></div>
+    <main class="admin-main">
+      <header class="admin-topbar">
+        {% from 'macros/icon.html' import icon %}
+        <button class="admin-toggle" id="admin-toggle" aria-label="Toggle menu">{{ icon('menu', size=20) }}</button>
+        <div class="admin-title">{% block title %}Dashboard{% endblock %}</div>
+        <div></div>
+      </header>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <script>
+    window.csrfToken = "{{ csrf_token }}";
+  </script>
+  <script src="{{ bust('js/admin.js') }}" defer></script>
+</body>
+</html>

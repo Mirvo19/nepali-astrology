@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section about" data-reveal>
+    <div class="container">
+      <p class="section-label">about</p>
+      <h1 class="section-heading">About Nepali Astrology</h1>
+      <div class="section-divider"></div>
+      <div class="profile">
+        <div class="profile-photo">
+          <img src="{{ site_settings.about_image_url or bust('assets/placeholder.svg') }}" alt="About" loading="lazy" width="480" height="640" />
+        </div>
+        <div class="profile-card">
+          <p>{{ site_settings.about_text }}</p>
+          <p>We honor Vedic astrology, kundali, rashifal, numerology, and vastu traditions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" data-reveal>
+    <div class="container">
+      <p class="section-label">our team</p>
+      <h2 class="section-heading center">The practitioners</h2>
+      <div class="section-divider"></div>
+      <div class="card-grid astro-grid">
+        {% for astro in astrologers %}
+        <div class="astro-card" data-reveal data-reveal-delay="100">
+          <div class="astro-media">
+            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+            <div class="astro-overlay"></div>
+          </div>
+          <div class="card-body">
+            <h3>{{ astro.name }}</h3>
+            <p class="astro-title">{{ astro.title }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

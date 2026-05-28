@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section booking" data-reveal>
+    <div class="container">
+      <p class="section-label">booking</p>
+      <h1 class="section-heading">Book a session</h1>
+      <div class="section-divider"></div>
+      <div class="booking-layout">
+        <form method="post" id="booking-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+          <div class="form-grid">
+            <div>
+              <label for="client-name">Full name</label>
+              <input id="client-name" type="text" name="client_name" placeholder="Full name" required />
+            </div>
+            <div>
+              <label for="client-email">Email</label>
+              <input id="client-email" type="email" name="client_email" placeholder="Email" required />
+            </div>
+            <div>
+              <label for="client-phone">Phone</label>
+              <input id="client-phone" type="tel" name="client_phone" placeholder="Phone" />
+            </div>
+            <div>
+              <label for="client-birth-date">Birth date</label>
+              <input id="client-birth-date" type="date" name="client_birth_date" placeholder="Birth date" />
+            </div>
+            <div>
+              <label for="client-birth-time">Birth time</label>
+              <input id="client-birth-time" type="text" name="client_birth_time" placeholder="Birth time (optional)" />
+            </div>
+            <div>
+              <label for="client-birth-place">Birth place</label>
+              <input id="client-birth-place" type="text" name="client_birth_place" placeholder="Birth place" />
+            </div>
+            <div>
+              <label for="appointment-date">Appointment date</label>
+              <input type="date" name="appointment_date" id="appointment-date" required />
+            </div>
+            <div>
+              <label for="appointment-time">Appointment time</label>
+              <input type="hidden" name="appointment_time" id="appointment-time" />
+            </div>
+          </div>
+          <div class="slot-picker" data-astrologer="{{ astrologer.id }}" data-service="{{ service.id }}">
+            <h4>Choose your time</h4>
+            <div class="slot-list" id="slot-list"></div>
+            <div class="spinner" id="slot-spinner"></div>
+          </div>
+          <label for="booking-notes">Notes</label>
+          <textarea id="booking-notes" name="notes" placeholder="Notes"></textarea>
+          <button type="submit" class="btn-primary">Continue to checkout</button>
+        </form>
+        <aside class="summary-card booking-summary-sticky">
+          <h3>Booking summary</h3>
+          <p>Astrologer: {{ astrologer.name }}</p>
+          <p>Service: {{ service.name }} ({{ service.duration_minutes }} mins)</p>
+          <p>Price: रू {{ service.price_npr }}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

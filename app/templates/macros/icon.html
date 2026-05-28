@@ -1,0 +1,5 @@
+{% macro icon(name, size=20, class='', color='currentColor') %}
+<svg width="{{ size }}" height="{{ size }}" class="icon icon-{{ name }} {{ class }}" aria-hidden="true" focusable="false" style="color:{{ color }}">
+  <use href="#icon-{{ name }}"/>
+</svg>
+{% endmacro %}

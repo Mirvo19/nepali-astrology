@@ -1,0 +1,48 @@
+{% extends 'admin/base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <form method="post" enctype="multipart/form-data" class="admin-form" id="blog-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="title" placeholder="Title" required />
+    <input type="text" name="slug" placeholder="Slug" />
+    <textarea name="excerpt" placeholder="Excerpt"></textarea>
+    <textarea name="content" placeholder="Content" class="rich-text"></textarea>
+    <div class="upload-zone">
+      <input type="file" name="cover_image" accept="image/*" />
+    </div>
+    <input type="text" name="meta_title" placeholder="Meta title" />
+    <textarea name="meta_description" placeholder="Meta description"></textarea>
+    <label><input type="checkbox" name="is_published" /> Published</label>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for item in posts %}
+        <tr>
+          <td><strong>{{ item.title }}</strong></td>
+          <td><span class="badge badge-neutral">{{ 'Published' if item.is_published else 'Draft' }}</span></td>
+          <td>
+            <form method="post" action="/admin/blog/delete">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <input type="hidden" name="post_id" value="{{ item.id }}" />
+              <div class="action-icons">
+                <button class="icon-btn" type="submit" aria-label="Delete">{{ icon('trash', size=16) }}</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

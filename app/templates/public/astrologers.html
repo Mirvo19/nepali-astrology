@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section" data-reveal>
+    <div class="container">
+      <p class="section-label">astrologers</p>
+      <h1 class="section-heading">Our Astrologers</h1>
+      <div class="section-divider"></div>
+      <div class="filter-bar">
+        <button class="filter-pill active" data-filter="all" type="button">All Services</button>
+        {% for service_name in service_names %}
+        <button class="filter-pill" data-filter="{{ service_name|lower }}" type="button">{{ service_name }}</button>
+        {% endfor %}
+        <select id="service-filter" class="hidden-select">
+          <option value="all">All Services</option>
+          {% for service_name in service_names %}
+          <option value="{{ service_name|lower }}">{{ service_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="card-grid astro-grid" id="astrologer-grid">
+        {% for astro in astrologers %}
+        <div class="astro-card" data-services="{{ (services_map.get(astro.id, [])|join(' ') )|lower }}" data-reveal data-reveal-delay="100">
+          <div class="astro-media">
+            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+            <div class="astro-overlay"></div>
+          </div>
+          <div class="card-body">
+            <h3>{{ astro.name }}</h3>
+            <p class="astro-title">{{ astro.title }}</p>
+            <p class="astro-meta">{{ astro.languages|join(', ') }}</p>
+            <p class="astro-meta">{{ astro.experience_years }} years</p>
+            <div class="card-footer">
+              <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">Book Now</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

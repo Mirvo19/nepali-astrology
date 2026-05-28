@@ -1,0 +1,52 @@
+{% extends 'admin/base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block title %}Services{% endblock %}
+{% block content %}
+<section class="admin-section">
+  <h2>Add service</h2>
+  <form method="post" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <select name="astrologer_id" required>
+      {% for astro in astrologers %}
+      <option value="{{ astro.id }}">{{ astro.name }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="name" placeholder="Service name" required />
+    <textarea name="description" placeholder="Description"></textarea>
+    <input type="number" name="duration_minutes" placeholder="Duration minutes" />
+    <input type="number" name="price_npr" placeholder="Price NPR" />
+    <input type="number" name="sort_order" placeholder="Sort order" />
+    <label><input type="checkbox" name="is_active" checked /> Active</label>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <h2>Service list</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Astrologer</th><th>Price</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for service in services %}
+        <tr>
+          <td><strong>{{ service.name }}</strong></td>
+          <td>{{ service.astrologer_id }}</td>
+          <td>{{ service.price_npr }}</td>
+          <td>
+            <form method="post" action="/admin/services/delete">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <input type="hidden" name="service_id" value="{{ service.id }}" />
+              <div class="action-icons">
+                <button class="icon-btn" type="submit" aria-label="Delete">{{ icon('trash', size=16) }}</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

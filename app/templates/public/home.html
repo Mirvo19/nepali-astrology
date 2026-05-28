@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block content %}
+<section class="hero" id="hero">
+  <canvas id="starfield"></canvas>
+  <div class="container hero-grid">
+    <div>
+      <p class="section-label">vedic astrology · nepal</p>
+      <h1 class="hero-title" id="hero-title">{{ site_settings.hero_heading }}</h1>
+      <p class="hero-sub">{{ site_settings.hero_subheading }}</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="/astrologers">{{ site_settings.hero_cta_text }}</a>
+        <a class="hero-link" href="/about">Explore our lineage</a>
+      </div>
+      <div class="hero-stats">
+        <span data-counter="1200" data-counter-suffix="+">1200+</span>
+        <span>readings</span>
+        <span>·</span>
+        <span data-counter="15" data-counter-suffix="+">15+</span>
+        <span>years</span>
+        <span>·</span>
+        <span data-counter="6" data-counter-suffix="+">6+</span>
+        <span>astrologers</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="zodiac-ring" id="zodiac-wheel">
+        {% for sign in range(12) %}
+        <div class="zodiac-glyph">{{ icon('orb', size=18) }}</div>
+        {% endfor %}
+        <div class="zodiac-center"></div>
+      </div>
+      <div class="kundali-card">
+        <div class="kundali-grid"></div>
+        <span class="section-label">kundali</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="featured-astrologers" data-reveal>
+  <div class="container">
+    <p class="section-label">featured astrologers</p>
+    <h2 class="section-heading center">Guardians of the tradition</h2>
+    <div class="section-divider"></div>
+    <div class="card-grid astro-grid">
+      {% for astro in astrologers %}
+      <div class="astro-card" data-reveal data-reveal-delay="100">
+        <div class="astro-media">
+          <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+          <div class="astro-overlay"></div>
+        </div>
+        <div class="card-body">
+          <h3>{{ astro.name }}</h3>
+          <p class="astro-title">{{ astro.title }}</p>
+          <p class="astro-meta">{{ astro.experience_years }} years</p>
+          <div class="card-footer">
+            <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">Book Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="service-highlights" data-reveal>
+  <div class="container">
+    <p class="section-label">services</p>
+    <h2 class="section-heading">Guidance for every path</h2>
+    <div class="section-divider"></div>
+    <div class="card-grid service-grid">
+      <div class="service-card" data-reveal data-reveal-delay="100">
+        <div>
+          <h4>Kundali Reading</h4>
+          <p class="service-description">Detailed birth chart analysis with Vedic remedies.</p>
+          <span class="badge badge-neutral">90 mins</span>
+        </div>
+        <div>
+          <div class="service-price">रू 2,500</div>
+          <a class="btn-secondary" href="/astrologers">Book</a>
+        </div>
+      </div>
+      <div class="service-card" data-reveal data-reveal-delay="200">
+        <div>
+          <h4>Rashifal Forecast</h4>
+          <p class="service-description">Monthly insights for career, love, and wellbeing.</p>
+          <span class="badge badge-neutral">45 mins</span>
+        </div>
+        <div>
+          <div class="service-price">रू 1,500</div>
+          <a class="btn-secondary" href="/astrologers">Book</a>
+        </div>
+      </div>
+      <div class="service-card" data-reveal data-reveal-delay="300">
+        <div>
+          <h4>Vastu & Numerology</h4>
+          <p class="service-description">Align your space and numbers with cosmic energy.</p>
+          <span class="badge badge-neutral">60 mins</span>
+        </div>
+        <div>
+          <div class="service-price">रू 1,800</div>
+          <a class="btn-secondary" href="/astrologers">Book</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works" data-reveal>
+  <div class="container">
+    <p class="section-label">process</p>
+    <h2 class="section-heading center">How it works</h2>
+    <div class="section-divider"></div>
+    <div class="steps">
+      <div data-reveal data-reveal-delay="100">
+        <div class="step-number">01</div>
+        <h3>Choose an astrologer</h3>
+        <p>Browse expert profiles and services.</p>
+      </div>
+      <div data-reveal data-reveal-delay="200">
+        <div class="step-number">02</div>
+        <h3>Select your time</h3>
+        <p>Pick a slot that suits your schedule.</p>
+      </div>
+      <div data-reveal data-reveal-delay="300">
+        <div class="step-number">03</div>
+        <h3>Get your reading</h3>
+        <p>Join your session online or in-person.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testimonials" data-reveal>
+  <div class="container">
+    <p class="section-label">testimonials</p>
+    <h2 class="section-heading">Voices of trust</h2>
+    <div class="testimonial-track" id="testimonial-carousel">
+      {% for testimonial in testimonials %}
+      <div class="testimonial-card">
+        <div class="testimonial-stars">{% for i in range(5) %}{{ icon('star', size=16, class='text-gold') }}{% endfor %}</div>
+        <p class="testimonial-content">{{ testimonial.content }}</p>
+        <div class="testimonial-meta">
+          <div class="name">{{ testimonial.client_name }}</div>
+          <div class="location">{{ testimonial.client_location }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="carousel-controls">
+      <div class="carousel-buttons">
+        <button class="carousel-btn" type="button" data-carousel="prev">{{ icon('chevron-left', size=16) }}</button>
+        <button class="carousel-btn" type="button" data-carousel="next">{{ icon('chevron-right', size=16) }}</button>
+      </div>
+      <div class="carousel-dots" id="testimonial-dots"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="latest-posts" data-reveal>
+  <div class="container">
+    <p class="section-label">journal</p>
+    <h2 class="section-heading">Latest insights</h2>
+    <div class="section-divider"></div>
+    <div class="blog-grid">
+      {% for post in posts %}
+      <article class="post-card {% if loop.index == 1 %}post-card-large{% endif %}" data-reveal data-reveal-delay="100">
+        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }}" loading="lazy" width="640" height="360" />
+        <div class="post-body">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.excerpt }}</p>
+          <a class="btn-secondary" href="/blog/{{ post.slug }}">Read More</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" data-reveal>
+  <div class="container">
+    <p class="section-label">faq</p>
+    <h2 class="section-heading">Frequently asked questions</h2>
+    <div class="section-divider"></div>
+    <div class="accordion" id="faq-accordion">
+      {% for faq in faqs %}
+      <div class="accordion-item">
+        <button class="accordion-header">{{ faq.question }}<span class="chevron">{{ icon('chevron-down', size=16) }}</span></button>
+        <div class="accordion-body">{{ faq.answer }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

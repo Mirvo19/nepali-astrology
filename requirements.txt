@@ -1,0 +1,10 @@
+flask
+flask-session
+supabase
+python-dotenv
+gunicorn
+stripe
+requests
+python-slugify
+pillow
+bleach

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#111118"/>
+  <circle cx="400" cy="240" r="120" fill="#c9a84c" opacity="0.2"/>
+  <text x="50%" y="50%" fill="#e8e4d9" font-size="32" font-family="DM Sans, sans-serif" text-anchor="middle">Nepali Astrology</text>
+</svg>

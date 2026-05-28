@@ -1,0 +1,58 @@
+{% extends 'admin/base.html' %}
+{% from 'macros/icon.html' import icon %}
+{% block title %}Astrologers{% endblock %}
+{% block content %}
+<section class="admin-section" id="add-astrologer">
+  <h2>Add astrologer</h2>
+  <form method="post" enctype="multipart/form-data" class="admin-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="text" name="slug" placeholder="Slug" />
+    <input type="text" name="title" placeholder="Title" />
+    <textarea name="bio" placeholder="Bio"></textarea>
+    <input type="text" name="languages" placeholder="Languages (comma separated)" />
+    <input type="number" name="experience_years" placeholder="Experience years" />
+    <input type="number" name="sort_order" placeholder="Sort order" />
+    <label><input type="checkbox" name="is_active" checked /> Active</label>
+    <div class="upload-zone">
+      <input type="file" name="photo" accept="image/*" />
+    </div>
+    <div class="form-actions">
+      <button class="btn-outline" type="reset">Cancel</button>
+      <button class="btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+<section class="admin-section">
+  <div class="form-actions" style="margin-bottom: 16px; justify-content: space-between;">
+    <div></div>
+    <a class="btn-primary" href="#add-astrologer">Add astrologer</a>
+  </div>
+  <h2>Astrologers list</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for astro in astrologers %}
+        <tr>
+          <td><strong>{{ astro.name }}</strong></td>
+          <td>{{ astro.title }}</td>
+          <td>
+            <span class="badge badge-neutral">{{ 'Active' if astro.is_active else 'Inactive' }}</span>
+          </td>
+          <td>
+            <form method="post" action="/admin/astrologers/delete">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <input type="hidden" name="astrologer_id" value="{{ astro.id }}" />
+              <div class="action-icons">
+                <button class="icon-btn" type="submit" aria-label="Delete">{{ icon('trash', size=16) }}</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
