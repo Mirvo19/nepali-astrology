@@ -1,7 +1,4 @@
-"""Legacy compatibility module.
-
-Canonical deployment entrypoint is app.py.
-"""
+"""WSGI entrypoint for Vercel and production servers."""
 
 from app import create_app
 

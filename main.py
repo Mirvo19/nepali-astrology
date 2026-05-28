@@ -1,4 +1,8 @@
-"""Legacy local entrypoint. Prefer: python main.py"""
+"""Local development entrypoint.
+
+Do not name this file app.py — that shadows the app/ package on Vercel.
+Use wsgi.py for deployment (see vercel.json).
+"""
 import os
 from app import create_app
 

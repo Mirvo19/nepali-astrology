@@ -11,7 +11,7 @@
 ## Run locally
 
 - Windows PowerShell:
-  - Create a virtual environment, install requirements, then run `python app.py`.
+  - Create a virtual environment, install requirements, then run `python main.py`.
 
 ## Admin login
 
@@ -46,7 +46,7 @@ Go to project → Settings → Environment variables and add:
 
 ### 2. Deploy
 
-Connect the GitHub repo to Vercel. Vercel auto-detects Python and uses `app.py`.
+Connect the GitHub repo to Vercel. Deployment uses `wsgi.py` (not `app.py`, which would shadow the `app/` package).
 
 ### 3. Custom domain
 
