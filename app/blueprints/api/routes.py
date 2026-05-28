@@ -7,7 +7,7 @@ from app.models.services import get_service
 from app.utils.slots import generate_slots
 from app.utils.mailer import send_contact_message
 from app.models.site_settings import get_site_settings
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 
 logger = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ def book():
             abort(400)
         payload["status"] = "pending"
         payload["payment_status"] = "unpaid"
-        payload["created_at"] = datetime.utcnow().isoformat()
+        payload["created_at"] = datetime.now(tz=timezone.utc).isoformat()
         create_booking(payload)
         return jsonify({"status": "ok"})
     except Exception as e:

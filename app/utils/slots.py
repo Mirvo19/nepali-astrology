@@ -1,4 +1,7 @@
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+NPT = ZoneInfo("Asia/Kathmandu")
 
 
 def parse_time(value):
@@ -38,5 +41,10 @@ def generate_slots(availability, blocked_dates, confirmed_bookings, date_str, du
             if slot_time not in booked_times:
                 slots.append(slot_time)
             current += timedelta(minutes=duration_minutes)
+
+    now_npt = datetime.now(NPT)
+    if date_value == now_npt.date():
+        cutoff = now_npt.strftime("%H:%M")
+        slots = [slot for slot in slots if slot > cutoff]
 
     return slots

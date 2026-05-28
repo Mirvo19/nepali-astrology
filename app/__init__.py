@@ -11,38 +11,27 @@ from .blueprints.admin.routes import admin_bp
 from .blueprints.api.routes import api_bp
 from .models.site_settings import get_site_settings
 from .utils.seo import render_seo
-from .utils.static_hash import bust
-import os
+from .utils.static_hash import register_bust
 import secrets
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
 
 
 def create_app():
+    if not logging.getLogger().handlers:
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler(sys.stdout)],
+        )
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(Config)
+    Config.validate()
+    app.permanent_session_lifetime = app.config["PERMANENT_SESSION_LIFETIME"]
 
-    # Warn when running with the default secret key; require FLASK_SECRET_KEY in prod.
-    if app.config.get("SECRET_KEY", "").startswith("dev_"):
-        logger.warning("Using default SECRET_KEY; set FLASK_SECRET_KEY in environment for production.")
-
-    # If running on Vercel, explicitly avoid filesystem session config
-    if os.getenv("VERCEL") == "1":
-        app.config["SESSION_TYPE"] = None
-        logger.info("Running on Vercel: SESSION_TYPE set to None (using Flask signed cookie sessions).")
-
-    # Use signed cookie sessions on Vercel; filesystem sessions are not reliable there.
-    if os.getenv("VERCEL") != "1":
-        try:
-            from flask_session import Session
-            Session(app)
-        except Exception as e:
-            logger.warning(f"Failed to initialize Flask-Session: {e}. Using default sessions.")
-    else:
-        logger.info("Skipping Flask-Session on Vercel; using default signed cookie sessions.")
-
-    app.jinja_env.globals["bust"] = bust
+    register_bust(app)
 
     # Register blueprints (raise on failure with full trace)
     try:

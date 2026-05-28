@@ -1,17 +1,25 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/index.py", "use": "@vercel/python" }
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
+    }
   ],
   "routes": [
-    { "src": "^/(.*)", "dest": "api/index.py" }
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
   ],
-  "functions": {
-    "wsgi.py": { "runtime": "python3.11" },
-    "api/*.py": { "runtime": "python3.11" }
-  },
-  "buildCommand": "python build.py",
-  "outputDirectory": ".",
   "headers": [
     {
       "source": "/static/(.*)",
@@ -55,5 +63,8 @@
         { "key": "Cache-Control", "value": "no-store" }
       ]
     }
-  ]
+  ],
+  "env": {
+    "FLASK_ENV": "production"
+  }
 }

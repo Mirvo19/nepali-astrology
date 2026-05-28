@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, abort
-from datetime import datetime
+from datetime import datetime, timezone
 from ...models.astrologers import get_astrologer_by_slug
 from ...models.services import get_service
 from ...models.bookings import create_booking, get_booking_by_ref
@@ -14,8 +14,9 @@ def validate_csrf():
 
 
 def generate_booking_ref():
-    suffix = datetime.utcnow().strftime("%H%M%S")
-    date_part = datetime.utcnow().strftime("%Y%m%d")
+    now_utc = datetime.now(tz=timezone.utc)
+    suffix = now_utc.strftime("%H%M%S")
+    date_part = now_utc.strftime("%Y%m%d")
     return f"NA-{date_part}-{suffix}"
 
 

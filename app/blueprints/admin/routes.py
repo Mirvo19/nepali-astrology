@@ -6,13 +6,13 @@ from ...models.astrologers import list_astrologers, create_or_update_astrologer,
 from ...models.services import list_services, create_or_update_service, delete_service
 from ...models.availability import list_availability, create_or_update_availability, delete_availability
 from ...models.blocked_dates import list_blocked_dates, create_blocked_date, delete_blocked_date
-from ...models.site_settings import update_site_settings
+from ...models.site_settings import get_site_settings, update_site_settings
 from ...models.testimonials import list_testimonials, create_or_update_testimonial, delete_testimonial
 from ...models.faqs import list_faqs, create_or_update_faq, delete_faq
 from ...models.blog_posts import list_blog_posts, create_or_update_post, delete_post
 from ...models.gallery import list_gallery, create_or_update_gallery, delete_gallery
 from slugify import slugify
-from datetime import datetime
+from datetime import datetime, timezone
 import bleach
 import uuid
 
@@ -223,7 +223,8 @@ def settings_manager():
 				if uploaded:
 					payload[field] = uploaded
 		update_site_settings(payload)
-	return render_template("admin/settings.html")
+	site_settings = get_site_settings()
+	return render_template("admin/settings.html", site_settings=site_settings)
 
 
 @admin_bp.route("/testimonials", methods=["GET", "POST"])
@@ -310,7 +311,7 @@ def blog_manager():
 			"meta_title": request.form.get("meta_title"),
 			"meta_description": request.form.get("meta_description"),
 			"is_published": is_published,
-			"published_at": datetime.utcnow().isoformat() if is_published else None,
+			"published_at": datetime.now(tz=timezone.utc).isoformat() if is_published else None,
 		}
 		cover_url = upload_to_storage(request.files.get("cover_image"))
 		if cover_url:

@@ -42,12 +42,15 @@ def get_site_settings():
 
 
 def update_site_settings(payload):
-    client = get_admin_client()
-    existing = client.table("site_settings").select("id").limit(1).execute()
-    if existing.data:
-        setting_id = existing.data[0]["id"]
-        result = client.table("site_settings").update(payload).eq("id", setting_id).execute()
-    else:
-        result = client.table("site_settings").insert(payload).execute()
-    invalidate("settings:global")
-    return result
+    try:
+        client = get_admin_client()
+        existing = client.table("site_settings").select("id").limit(1).execute()
+        if existing.data:
+            setting_id = existing.data[0]["id"]
+            result = client.table("site_settings").update(payload).eq("id", setting_id).execute()
+        else:
+            result = client.table("site_settings").insert(payload).execute()
+        invalidate("settings:global")
+        return result
+    except Exception:
+        return None

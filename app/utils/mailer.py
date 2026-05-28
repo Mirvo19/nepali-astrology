@@ -4,24 +4,27 @@ from flask import current_app
 
 
 def send_email(to_email, subject, html_body):
-    host = current_app.config.get("SMTP_HOST")
-    port = current_app.config.get("SMTP_PORT")
-    user = current_app.config.get("SMTP_USER")
-    password = current_app.config.get("SMTP_PASS")
+    try:
+        host = current_app.config.get("SMTP_HOST")
+        port = current_app.config.get("SMTP_PORT")
+        user = current_app.config.get("SMTP_USER")
+        password = current_app.config.get("SMTP_PASS")
 
-    if not host or not user or not password:
+        if not host or not user or not password:
+            return False
+
+        message = MIMEText(html_body, "html")
+        message["Subject"] = subject
+        message["From"] = user
+        message["To"] = to_email
+
+        with smtplib.SMTP(host, port) as server:
+            server.starttls()
+            server.login(user, password)
+            server.sendmail(user, [to_email], message.as_string())
+        return True
+    except Exception:
         return False
-
-    message = MIMEText(html_body, "html")
-    message["Subject"] = subject
-    message["From"] = user
-    message["To"] = to_email
-
-    with smtplib.SMTP(host, port) as server:
-        server.starttls()
-        server.login(user, password)
-        server.sendmail(user, [to_email], message.as_string())
-    return True
 
 
 def send_booking_confirmation(to_email, booking):

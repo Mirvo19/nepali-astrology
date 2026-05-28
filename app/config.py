@@ -1,36 +1,44 @@
 import os
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
 class Config:
-    SECRET_KEY = os.getenv("FLASK_SECRET_KEY") or "dev_secret"
-    
-    # Session configuration - use memory-based for Vercel compatibility
-    # Filesystem sessions don't work on Vercel's ephemeral filesystem
-    SESSION_TYPE = "filesystem"
-    SESSION_PERMANENT = False
-    SESSION_USE_SIGNER = True
-    PERMANENT_SESSION_LIFETIME = 3600
-    
-    # Database configuration
-    SUPABASE_URL = os.getenv("SUPABASE_URL", "")
-    SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
-    SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
-    
-    # Payment configuration
-    STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
-    STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
-    
-    # Email configuration
-    SMTP_HOST = os.getenv("SMTP_HOST", "")
-    smtp_port = os.getenv("SMTP_PORT", "587")
+    # Required
+    SECRET_KEY = os.environ.get("FLASK_SECRET_KEY") or os.environ.get("SECRET_KEY")
+    SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+    SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
+    SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
+
+    # Runtime
+    FLASK_ENV = os.environ.get("FLASK_ENV", "production")
+    DEBUG = FLASK_ENV == "development"
+    TESTING = False
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=8)
+
+    # Payment (optional at startup)
+    STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+    STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+
+    # Email (optional)
+    SMTP_HOST = os.environ.get("SMTP_HOST", "")
+    smtp_port = os.environ.get("SMTP_PORT", "587")
     SMTP_PORT = int(smtp_port) if smtp_port.isdigit() else 587
-    SMTP_USER = os.getenv("SMTP_USER", "")
-    SMTP_PASS = os.getenv("SMTP_PASS", "")
-    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")
-    
-    # Site configuration
-    SITE_URL = os.getenv("SITE_URL", "https://nepaliastrology.com")
+    SMTP_USER = os.environ.get("SMTP_USER", "")
+    SMTP_PASS = os.environ.get("SMTP_PASS", "")
+    ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "")
+
+    # Site
+    SITE_URL = os.environ.get("SITE_URL", "https://nepaliastrology.com")
     TIMEZONE = "Asia/Kathmandu"
+
+    @classmethod
+    def validate(cls):
+        missing = []
+        for key in ["SECRET_KEY", "SUPABASE_URL", "SUPABASE_KEY"]:
+            if not getattr(cls, key):
+                missing.append(key)
+        if missing:
+            raise RuntimeError(f"missing required env vars: {', '.join(missing)}")

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import current_app
 from ..models.astrologers import list_astrologers
 from ..models.blog_posts import list_blog_posts
@@ -34,7 +34,7 @@ def generate_sitemap():
     for post in posts:
         urls.append(f"/blog/{post['slug']}")
 
-    lastmod = datetime.utcnow().date().isoformat()
+    lastmod = datetime.now(tz=timezone.utc).date().isoformat()
     items = "".join(
         [
             f"<url><loc>{base_url}{path}</loc><lastmod>{lastmod}</lastmod></url>"
