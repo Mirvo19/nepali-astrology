@@ -1,6 +1,15 @@
 {
   "buildCommand": "python build.py",
   "outputDirectory": ".",
+  "functions": {
+    "wsgi.py": {
+      "runtime": "@vercel/python",
+      "includeFiles": [
+        "app/**",
+        "wsgi.py"
+      ]
+    }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/wsgi.py" }],
   "headers": [
     {
