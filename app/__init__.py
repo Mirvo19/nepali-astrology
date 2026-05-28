@@ -1,5 +1,4 @@
 from flask import Flask, render_template, session, request
-from flask_session import Session
 from .config import Config
 from .blueprints.public.routes import public_bp
 from .blueprints.bookings.routes import bookings_bp
@@ -14,7 +13,6 @@ import secrets
 def create_app():
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(Config)
-    Session(app)
 
     app.jinja_env.globals["bust"] = bust
 

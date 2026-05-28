@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, Response
+from flask import Blueprint, render_template, request, Response, redirect, url_for
 from ...models.astrologers import list_astrologers, get_astrologer_by_slug
 from ...models.services import list_services
 from ...models.testimonials import list_testimonials
@@ -94,6 +94,11 @@ def about():
 @public_bp.route("/contact")
 def contact():
     return render_template("public/contact.html")
+
+
+@public_bp.route("/favicon.ico")
+def favicon():
+    return redirect(url_for("static", filename="assets/favicon.ico"), code=301)
 
 
 @public_bp.route("/sitemap.xml")
