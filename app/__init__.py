@@ -12,6 +12,7 @@ from .blueprints.api.routes import api_bp
 from .models.site_settings import get_site_settings
 from .utils.seo import render_seo
 from .utils.static_hash import bust
+import os
 import secrets
 import logging
 
@@ -22,12 +23,15 @@ def create_app():
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(Config)
 
-    # Initialize session handling
-    try:
-        from flask_session import Session
-        Session(app)
-    except Exception as e:
-        logger.warning(f"Failed to initialize Flask-Session: {e}. Using default sessions.")
+    # Use signed cookie sessions on Vercel; filesystem sessions are not reliable there.
+    if os.getenv("VERCEL") != "1":
+        try:
+            from flask_session import Session
+            Session(app)
+        except Exception as e:
+            logger.warning(f"Failed to initialize Flask-Session: {e}. Using default sessions.")
+    else:
+        logger.info("Skipping Flask-Session on Vercel; using default signed cookie sessions.")
 
     app.jinja_env.globals["bust"] = bust
 
