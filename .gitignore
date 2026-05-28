@@ -82,6 +82,7 @@ htmlcov/
 # Vercel
 .vercel
 .next
+public/static/
 
 # macOS
 .AppleDouble

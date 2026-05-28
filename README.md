@@ -11,7 +11,7 @@
 ## Run locally
 
 - Windows PowerShell:
-  - Create a virtual environment, install requirements, then run `python main.py`.
+  - Create a virtual environment, install requirements, then run `python app.py` or `python main.py`.
 
 ## Admin login
 
@@ -46,7 +46,7 @@ Go to project → Settings → Environment variables and add:
 
 ### 2. Deploy
 
-Connect the GitHub repo to Vercel. Deployment uses `wsgi.py` (not `app.py`, which would shadow the `app/` package).
+Connect the GitHub repo to Vercel. Deployment entrypoint is `app.py`; the Flask package lives in `application/` (so names do not collide).
 
 ### 3. Custom domain
 

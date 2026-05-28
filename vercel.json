@@ -1,23 +1,32 @@
 {
   "version": 2,
+  "buildCommand": "python scripts/vercel_build.py",
   "builds": [
     {
-      "src": "wsgi.py",
+      "src": "app.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
         "runtime": "python3.12",
         "includeFiles": [
-          "app/templates/**",
-          "app/static/**"
+          "application/templates/**",
+          "application/static/**"
         ]
       }
     }
   ],
+  "functions": {
+    "app.py": {
+      "includeFiles": [
+        "application/templates/**",
+        "application/static/**"
+      ]
+    }
+  },
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "wsgi.py"
+      "dest": "app.py"
     }
   ],
   "headers": [

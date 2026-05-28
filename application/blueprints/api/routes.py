@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify, abort, session
-from app.models.astrologers import list_astrologers
-from app.models.availability import list_availability
-from app.models.blocked_dates import list_blocked_dates
-from app.models.bookings import list_confirmed_bookings_by_date, create_booking
-from app.models.services import get_service
-from app.utils.slots import generate_slots
-from app.utils.mailer import send_contact_message
-from app.models.site_settings import get_site_settings
+from application.models.astrologers import list_astrologers
+from application.models.availability import list_availability
+from application.models.blocked_dates import list_blocked_dates
+from application.models.bookings import list_confirmed_bookings_by_date, create_booking
+from application.models.services import get_service
+from application.utils.slots import generate_slots
+from application.utils.mailer import send_contact_message
+from application.models.site_settings import get_site_settings
 from datetime import datetime, timezone
 import logging
 

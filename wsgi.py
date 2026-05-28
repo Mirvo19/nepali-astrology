@@ -1,6 +1,6 @@
-"""WSGI entrypoint for Vercel and production servers."""
+"""WSGI alias for gunicorn and legacy hosts."""
 
-from app import create_app
+from application import create_app
 
 app = create_app()
 application = app

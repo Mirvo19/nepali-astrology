@@ -1,10 +1,10 @@
-"""Local development entrypoint (same as app.py)."""
+"""Vercel / WSGI entrypoint. Root app.py must not share a name with the Flask package (application/)."""
+import os
+from application import create_app
 
-from app import app
+app = create_app()
 
 if __name__ == "__main__":
-    import os
-
     app.run(
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 5000)),

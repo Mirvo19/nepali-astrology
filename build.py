@@ -15,7 +15,7 @@ def minify_js(content):
     return content.strip()
 
 
-static_dir = os.path.join("app", "static")
+static_dir = os.path.join("application", "static")
 for root, _, files in os.walk(static_dir):
     for f in files:
         path = os.path.join(root, f)
