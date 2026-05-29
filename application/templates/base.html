@@ -80,7 +80,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/apple-touch-icon.png">
   <link rel="manifest" href="/static/assets/site.webmanifest">
-  <meta name="theme-color" content="#080808">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,7 +89,7 @@
   {% block preload %}{% endblock %}
 
   <style>
-    body { margin: 0; background: #080808; color: #e8e2d4; }
+    body { margin: 0; background: #ffffff; background: var(--bg-base); color: #111827; color: var(--text-primary); }
     .site-header { position: fixed; top: 0; width: 100%; z-index: 200; }
     .hero { min-height: 100svh; display: flex; align-items: center; }
   </style>
@@ -113,6 +113,20 @@
         <span></span>
         <span></span>
         <span></span>
+      </button>
+      <button
+        id="theme-toggle"
+        class="btn-theme-toggle"
+        aria-label="switch to dark mode"
+        title="toggle light / dark mode"
+      >
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
       </button>
     </nav>
   </header>

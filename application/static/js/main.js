@@ -1,3 +1,35 @@
+// theme toggle
+(function () {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const storageKey = 'na-theme';
+
+  const saved = localStorage.getItem(storageKey);
+  if (saved === 'dark') {
+    html.setAttribute('data-theme', 'dark');
+  }
+
+  if (!btn) return;
+
+  btn.setAttribute(
+    'aria-label',
+    html.getAttribute('data-theme') === 'dark' ? 'switch to light mode' : 'switch to dark mode'
+  );
+
+  btn.addEventListener('click', function () {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem(storageKey, 'light');
+      btn.setAttribute('aria-label', 'switch to dark mode');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem(storageKey, 'dark');
+      btn.setAttribute('aria-label', 'switch to light mode');
+    }
+  });
+})();
+
 const header = document.getElementById('site-header');
 const navToggle = document.getElementById('nav-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
@@ -107,6 +139,11 @@ if (canvas) {
     offset: Math.random() * Math.PI * 2,
   }));
 
+  const getStarColor = () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    return isDark ? 'rgba(200, 215, 255,' : 'rgba(45, 91, 227,';
+  };
+
   const resize = () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
@@ -127,7 +164,7 @@ if (canvas) {
       const driftY = (mouse.y - height / 2) * 0.00005 * star.s;
       const twinkle = (Math.sin(time * 0.001 * star.s + star.offset) + 1) / 2;
       const opacity = Math.min(0.6, Math.max(0.2, star.o * (0.5 + twinkle)));
-      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      ctx.fillStyle = `${getStarColor()}${opacity})`;
       ctx.beginPath();
       ctx.arc(star.x + driftX * width, star.y + driftY * height + scrollOffset, star.r, 0, Math.PI * 2);
       ctx.fill();

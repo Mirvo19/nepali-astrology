@@ -56,7 +56,7 @@
             <img src="{{ astrologer.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astrologer.name }} nepali astrologer for vedic astrology nepal" width="360" height="480" fetchpriority="high">
           </div>
           <div class="profile-card">
-            <h1 class="section-heading">{{ astrologer.name }} — nepali astrologer online consultation</h1>
+            <h1 class="section-heading">{{ astrologer.name }} </h1>
             <p class="astro-title">{{ astrologer.title }}</p>
             <p>{{ astrologer.bio }}</p>
             <p>for guidance on janam kundali nepal, horoscope reading nepal, and online astrology nepal sessions, you can <a href="/contact">contact our team</a> or <a href="/astrologers">view all nepali astrologers</a>.</p>
@@ -64,7 +64,7 @@
               {% for language in astrologer.languages %}
               <span class="badge badge-neutral">{{ language }}</span>
               {% endfor %}
-              <span class="badge badge-gold">{{ astrologer.experience_years }} years</span>
+              <span class="badge badge-accent">{{ astrologer.experience_years }} years</span>
             </div>
           </div>
         </div>

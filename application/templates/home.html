@@ -182,7 +182,7 @@
     <div class="testimonial-track" id="testimonial-carousel">
       {% for testimonial in testimonials %}
       <div class="testimonial-card">
-        <div class="testimonial-stars">{% for i in range(5) %}{{ icon('star', size=16, class='text-gold') }}{% endfor %}</div>
+        <div class="testimonial-stars">{% for i in range(5) %}{{ icon('star', size=16, class='text-accent') }}{% endfor %}</div>
         <p class="testimonial-content">{{ testimonial.content }}</p>
         <div class="testimonial-meta">
           <div class="name">{{ testimonial.client_name }}</div>
