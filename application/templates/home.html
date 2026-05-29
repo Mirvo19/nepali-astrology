@@ -41,7 +41,7 @@
   <div class="container hero-grid">
     <div>
       <p class="section-label">vedic astrology · nepal</p>
-      <h1 class="hero-title" id="hero-title">nepali astrology consultations with expert vedic astrologers</h1>
+      <h1 class="hero-title" id="hero-title">ancient wisdom, modern guidance</h1>
       <p class="hero-sub">book trusted kundali reading nepal, rashifal consultation, vastu guidance, and online jyotish consultation with experienced practitioners.</p>
       <div class="hero-cta">
         <a class="btn-primary" href="/astrologers">book a vedic astrology consultation</a>
@@ -76,7 +76,7 @@
 <section class="section" id="featured-astrologers" data-reveal>
   <div class="container">
     <p class="section-label">featured astrologers</p>
-    <h2 class="section-heading center">expert nepali astrologers for online astrology nepal</h2>
+    <h2 class="section-heading center">meet the astrologers</h2>
     <div class="section-divider"></div>
     <div class="card-grid astro-grid">
       {% for astro in astrologers %}
@@ -111,40 +111,40 @@
 <section class="section" id="service-highlights" data-reveal>
   <div class="container">
     <p class="section-label">services</p>
-    <h2 class="section-heading">vedic birth chart reading and specialised consultations</h2>
+    <h2 class="section-heading">our services</h2>
     <div class="section-divider"></div>
     <div class="card-grid service-grid">
       <div class="service-card" data-reveal data-reveal-delay="100">
-        <div>
+        <div class="service-info">
           <h3>Kundali Reading</h3>
           <p class="service-description">Detailed birth chart analysis with Vedic remedies.</p>
           <span class="badge badge-neutral">90 mins</span>
         </div>
-        <div>
+        <div class="service-action">
           <div class="service-price">रू 2,500</div>
-          <a class="btn-secondary" href="/astrologers">book a kundali reading online</a>
+          <a class="btn-secondary" href="/astrologers" aria-label="book a kundali reading online">book session</a>
         </div>
       </div>
       <div class="service-card" data-reveal data-reveal-delay="200">
-        <div>
+        <div class="service-info">
           <h3>Rashifal Forecast</h3>
           <p class="service-description">Monthly insights for career, love, and wellbeing.</p>
           <span class="badge badge-neutral">45 mins</span>
         </div>
-        <div>
+        <div class="service-action">
           <div class="service-price">रू 1,500</div>
-          <a class="btn-secondary" href="/astrologers">book rashifal consultation</a>
+          <a class="btn-secondary" href="/astrologers" aria-label="book rashifal consultation">book session</a>
         </div>
       </div>
       <div class="service-card" data-reveal data-reveal-delay="300">
-        <div>
+        <div class="service-info">
           <h3>Vastu & Numerology</h3>
           <p class="service-description">Align your space and numbers with cosmic energy.</p>
           <span class="badge badge-neutral">60 mins</span>
         </div>
-        <div>
+        <div class="service-action">
           <div class="service-price">रू 1,800</div>
-          <a class="btn-secondary" href="/astrologers">book vastu consultation nepal</a>
+          <a class="btn-secondary" href="/astrologers" aria-label="book vastu consultation nepal">book session</a>
         </div>
       </div>
     </div>
@@ -178,7 +178,7 @@
 <section class="section" id="testimonials" data-reveal>
   <div class="container">
     <p class="section-label">testimonials</p>
-    <h2 class="section-heading">horoscope reading nepal client reviews</h2>
+    <h2 class="section-heading">what clients say</h2>
     <div class="testimonial-track" id="testimonial-carousel">
       {% for testimonial in testimonials %}
       <div class="testimonial-card">
@@ -204,7 +204,7 @@
 <section class="section" id="latest-posts" data-reveal>
   <div class="container">
     <p class="section-label">journal</p>
-    <h2 class="section-heading">learn vedic astrology with our nepali jyotish blog</h2>
+    <h2 class="section-heading">latest insights</h2>
     <div class="section-divider"></div>
     <div class="blog-grid">
       {% for post in posts %}
@@ -224,12 +224,15 @@
 <section class="section" id="faq" data-reveal>
   <div class="container">
     <p class="section-label">faq</p>
-    <h2 class="section-heading">frequently asked questions about nepali astrology consultations</h2>
+    <h2 class="section-heading">frequently asked</h2>
     <div class="section-divider"></div>
     <div class="accordion" id="faq-accordion">
       {% for faq in faqs %}
       <div class="accordion-item">
-        <button class="accordion-header">{{ faq.question }}<span class="chevron">{{ icon('chevron-down', size=16) }}</span></button>
+        <button class="accordion-header" aria-expanded="false">
+          <span class="accordion-question-text">{{ faq.question }}</span>
+          <span class="chevron">{{ icon('chevron-down', size=16) }}</span>
+        </button>
         <div class="accordion-body">{{ faq.answer }}</div>
       </div>
       {% endfor %}

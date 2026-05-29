@@ -644,7 +644,7 @@ main { overflow: visible; }
   border-radius: var(--radius-md);
   padding: var(--space-6);
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 110px;
   gap: var(--space-4);
   align-items: start;
   transition: background var(--duration-base) var(--ease), border-color var(--duration-base) var(--ease);
@@ -669,6 +669,23 @@ main { overflow: visible; }
   font-family: 'Cormorant', serif;
   font-size: 28px;
   color: var(--gold);
+}
+
+/* Ensure left column can shrink inside grid and constrain right action column button */
+.service-card .service-info {
+  min-width: 0;
+}
+
+.service-card .service-action .btn-secondary,
+.service-card .service-action a {
+  white-space: nowrap;
+  max-width: 110px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .steps {
@@ -803,14 +820,19 @@ main { overflow: visible; }
   background: none;
   color: var(--text-primary);
   text-align: left;
-  padding: var(--space-5) 0;
+  padding: 20px 0;
   border: none;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
+  line-height: 1.5;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .accordion-body {
@@ -831,6 +853,15 @@ main { overflow: visible; }
   transition: transform 300ms var(--ease);
   color: var(--text-tertiary);
   font-size: 20px;
+}
+
+.accordion-question-text {
+  flex: 1;
+}
+
+.chevron {
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .accordion-item.active .chevron {
