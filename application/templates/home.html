@@ -1,16 +1,51 @@
 {% extends 'base.html' %}
 {% from 'macros/icon.html' import icon %}
+
+{% block seo_title %}nepali astrology — vedic kundali readings & jyotish consultations online{% endblock %}
+{% block seo_description %}book a vedic astrology consultation with expert nepali astrologers. kundali readings, rashifal, vastu, and jyotish guidance online. trusted by thousands across nepal and worldwide.{% endblock %}
+{% block seo_keywords %}nepali astrology, nepali astrologer, vedic astrology nepal, kundali reading nepal, online astrology nepal, astrology consultation nepal, nepali jyotish{% endblock %}
+{% block og_title %}nepali astrology — vedic kundali readings & jyotish consultations online{% endblock %}
+{% block og_description %}book a vedic astrology consultation with expert nepali astrologers. kundali readings, rashifal, vastu, and jyotish guidance online.{% endblock %}
+{% block twitter_title %}nepali astrology — vedic kundali readings & jyotish consultations online{% endblock %}
+{% block twitter_description %}book online astrology consultation in nepal with trusted nepali astrologers for kundali reading and rashifal guidance.{% endblock %}
+{% block preload %}
+<link rel="preload" as="image" href="/static/assets/hero-bg.webp">
+{% endblock %}
+{% block structured_data %}
+{{ super() }}
+{% if faqs %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for faq in faqs %}
+    {
+      "@type": "Question",
+      "name": {{ faq.question|tojson }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ faq.answer|tojson }}
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <section class="hero" id="hero">
   <canvas id="starfield"></canvas>
   <div class="container hero-grid">
     <div>
       <p class="section-label">vedic astrology · nepal</p>
-      <h1 class="hero-title" id="hero-title">{{ site_settings.hero_heading }}</h1>
-      <p class="hero-sub">{{ site_settings.hero_subheading }}</p>
+      <h1 class="hero-title" id="hero-title">nepali astrology consultations with expert vedic astrologers</h1>
+      <p class="hero-sub">book trusted kundali reading nepal, rashifal consultation, vastu guidance, and online jyotish consultation with experienced practitioners.</p>
       <div class="hero-cta">
-        <a class="btn-primary" href="/astrologers">{{ site_settings.hero_cta_text }}</a>
-        <a class="hero-link" href="/about">Explore our lineage</a>
+        <a class="btn-primary" href="/astrologers">book a vedic astrology consultation</a>
+        <a class="hero-link" href="/about">meet our nepali astrologers</a>
       </div>
       <div class="hero-stats">
         <span data-counter="1200" data-counter-suffix="+">1200+</span>
@@ -32,7 +67,7 @@
       </div>
       <div class="kundali-card">
         <div class="kundali-grid"></div>
-        <span class="section-label">kundali</span>
+        <span class="section-label">janam kundali nepal</span>
       </div>
     </div>
   </div>
@@ -41,13 +76,13 @@
 <section class="section" id="featured-astrologers" data-reveal>
   <div class="container">
     <p class="section-label">featured astrologers</p>
-    <h2 class="section-heading center">Guardians of the tradition</h2>
+    <h2 class="section-heading center">expert nepali astrologers for online astrology nepal</h2>
     <div class="section-divider"></div>
     <div class="card-grid astro-grid">
       {% for astro in astrologers %}
       <div class="astro-card" data-reveal data-reveal-delay="100">
         <div class="astro-media">
-          <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+          <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }} nepali astrologer for vedic kundali reading" loading="lazy" width="280" height="373" {% if loop.index == 1 %}fetchpriority="high"{% endif %}>
           <div class="astro-overlay"></div>
         </div>
         <div class="card-body">
@@ -55,7 +90,7 @@
           <p class="astro-title">{{ astro.title }}</p>
           <p class="astro-meta">{{ astro.experience_years }} years</p>
           <div class="card-footer">
-            <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">Book Now</a>
+            <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">book astrologer online nepal</a>
           </div>
         </div>
       </div>
@@ -64,69 +99,77 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="container container--narrow">
+    <span class="section-label">our approach</span>
+    <h2>why choose vedic astrology from nepal</h2>
+    <p>nepal is the birthplace of some of the world's most revered vedic traditions. our astrologers are trained in classical jyotish, the ancient system of vedic astrology that uses precise astronomical calculations to read your birth chart — your janam kundali. unlike western astrology, vedic jyotish accounts for the precession of the equinoxes, giving more accurate planetary positions and life predictions.</p>
+    <p>our consultations cover kundali reading, rashifal (yearly predictions), kundali matching for marriage, vastu shastra for home and business, numerology, and career and finance guidance — all rooted in the nepali and himalayan vedic tradition. explore <a href="/blog">nepali astrology predictions in our blog</a> or <a href="/astrologers">book a nepali astrologer online consultation</a>.</p>
+  </div>
+</section>
+
 <section class="section" id="service-highlights" data-reveal>
   <div class="container">
     <p class="section-label">services</p>
-    <h2 class="section-heading">Guidance for every path</h2>
+    <h2 class="section-heading">vedic birth chart reading and specialised consultations</h2>
     <div class="section-divider"></div>
     <div class="card-grid service-grid">
       <div class="service-card" data-reveal data-reveal-delay="100">
         <div>
-          <h4>Kundali Reading</h4>
+          <h3>Kundali Reading</h3>
           <p class="service-description">Detailed birth chart analysis with Vedic remedies.</p>
           <span class="badge badge-neutral">90 mins</span>
         </div>
         <div>
           <div class="service-price">रू 2,500</div>
-          <a class="btn-secondary" href="/astrologers">Book</a>
+          <a class="btn-secondary" href="/astrologers">book a kundali reading online</a>
         </div>
       </div>
       <div class="service-card" data-reveal data-reveal-delay="200">
         <div>
-          <h4>Rashifal Forecast</h4>
+          <h3>Rashifal Forecast</h3>
           <p class="service-description">Monthly insights for career, love, and wellbeing.</p>
           <span class="badge badge-neutral">45 mins</span>
         </div>
         <div>
           <div class="service-price">रू 1,500</div>
-          <a class="btn-secondary" href="/astrologers">Book</a>
+          <a class="btn-secondary" href="/astrologers">book rashifal consultation</a>
         </div>
       </div>
       <div class="service-card" data-reveal data-reveal-delay="300">
         <div>
-          <h4>Vastu & Numerology</h4>
+          <h3>Vastu & Numerology</h3>
           <p class="service-description">Align your space and numbers with cosmic energy.</p>
           <span class="badge badge-neutral">60 mins</span>
         </div>
         <div>
           <div class="service-price">रू 1,800</div>
-          <a class="btn-secondary" href="/astrologers">Book</a>
+          <a class="btn-secondary" href="/astrologers">book vastu consultation nepal</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="how-it-works" data-reveal>
+<section class="section">
   <div class="container">
-    <p class="section-label">process</p>
-    <h2 class="section-heading center">How it works</h2>
-    <div class="section-divider"></div>
-    <div class="steps">
-      <div data-reveal data-reveal-delay="100">
-        <div class="step-number">01</div>
-        <h3>Choose an astrologer</h3>
-        <p>Browse expert profiles and services.</p>
+    <span class="section-label">the process</span>
+    <h2>how to book your astrology consultation</h2>
+    <div class="steps steps-grid">
+      <div class="step" data-reveal data-reveal-delay="100">
+        <span class="step-num step-number">01</span>
+        <h3>choose your astrologer</h3>
+        <p>browse our team of expert nepali vedic astrologers and select the specialist whose expertise matches your question — kundali reading, rashifal, vastu, or numerology.</p>
       </div>
-      <div data-reveal data-reveal-delay="200">
-        <div class="step-number">02</div>
-        <h3>Select your time</h3>
-        <p>Pick a slot that suits your schedule.</p>
+      <div class="step" data-reveal data-reveal-delay="200">
+        <span class="step-num step-number">02</span>
+        <h3>select a service and time</h3>
+        <p>pick the astrology service you need and choose a date and time that works for you. sessions are available online so you can consult from anywhere in the world.</p>
       </div>
-      <div data-reveal data-reveal-delay="300">
-        <div class="step-number">03</div>
-        <h3>Get your reading</h3>
-        <p>Join your session online or in-person.</p>
+      <div class="step" data-reveal data-reveal-delay="300">
+        <span class="step-num step-number">03</span>
+        <h3>receive your vedic reading</h3>
+        <p>your astrologer will prepare your janam kundali and provide a detailed vedic reading covering the areas you want guidance on.</p>
       </div>
     </div>
   </div>
@@ -135,7 +178,7 @@
 <section class="section" id="testimonials" data-reveal>
   <div class="container">
     <p class="section-label">testimonials</p>
-    <h2 class="section-heading">Voices of trust</h2>
+    <h2 class="section-heading">horoscope reading nepal client reviews</h2>
     <div class="testimonial-track" id="testimonial-carousel">
       {% for testimonial in testimonials %}
       <div class="testimonial-card">
@@ -161,16 +204,16 @@
 <section class="section" id="latest-posts" data-reveal>
   <div class="container">
     <p class="section-label">journal</p>
-    <h2 class="section-heading">Latest insights</h2>
+    <h2 class="section-heading">learn vedic astrology with our nepali jyotish blog</h2>
     <div class="section-divider"></div>
     <div class="blog-grid">
       {% for post in posts %}
       <article class="post-card {% if loop.index == 1 %}post-card-large{% endif %}" data-reveal data-reveal-delay="100">
-        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }}" loading="lazy" width="640" height="360" />
+        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }} vedic astrology nepal article" loading="lazy" width="640" height="360">
         <div class="post-body">
           <h3>{{ post.title }}</h3>
           <p>{{ post.excerpt }}</p>
-          <a class="btn-secondary" href="/blog/{{ post.slug }}">Read More</a>
+          <a class="btn-secondary" href="/blog/{{ post.slug }}">learn how to read your kundali</a>
         </div>
       </article>
       {% endfor %}
@@ -181,7 +224,7 @@
 <section class="section" id="faq" data-reveal>
   <div class="container">
     <p class="section-label">faq</p>
-    <h2 class="section-heading">Frequently asked questions</h2>
+    <h2 class="section-heading">frequently asked questions about nepali astrology consultations</h2>
     <div class="section-divider"></div>
     <div class="accordion" id="faq-accordion">
       {% for faq in faqs %}

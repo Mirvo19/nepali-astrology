@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}about nepali astrology — vedic astrology nepal tradition and experts{% endblock %}
+{% block seo_description %}learn about nepali astrology, our vedic jyotish lineage, and the astrologers who provide kundali reading nepal and online astrology consultations worldwide.{% endblock %}
+{% block seo_keywords %}about nepali astrology, vedic astrology nepal, nepali jyotish, best vedic astrologer nepal, astrology reading in nepali language{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section about" data-reveal>
     <div class="container">
       <p class="section-label">about</p>
-      <h1 class="section-heading">About Nepali Astrology</h1>
+      <h1 class="section-heading">about nepali astrology and our vedic jyotish tradition</h1>
       <div class="section-divider"></div>
       <div class="profile">
         <div class="profile-photo">
-          <img src="{{ site_settings.about_image_url or bust('assets/placeholder.svg') }}" alt="About" loading="lazy" width="480" height="640" />
+          <img src="{{ site_settings.about_image_url or bust('assets/placeholder.svg') }}" alt="about nepali astrology vedic tradition" loading="lazy" width="480" height="640" fetchpriority="high">
         </div>
         <div class="profile-card">
           <p>{{ site_settings.about_text }}</p>
-          <p>We honor Vedic astrology, kundali, rashifal, numerology, and vastu traditions.</p>
+          <p>we honor vedic astrology, kundali, rashifal, numerology, and vastu traditions to provide practical guidance for modern life in nepal and globally.</p>
+          <p>meet <a href="/astrologers">our nepali astrologers</a> or <a href="/blog">read vedic astrology guides</a> before booking your consultation.</p>
         </div>
       </div>
     </div>
@@ -20,13 +26,13 @@
   <section class="section" data-reveal>
     <div class="container">
       <p class="section-label">our team</p>
-      <h2 class="section-heading center">The practitioners</h2>
+      <h2 class="section-heading center">vedic astrologers and kundali experts</h2>
       <div class="section-divider"></div>
       <div class="card-grid astro-grid">
         {% for astro in astrologers %}
         <div class="astro-card" data-reveal data-reveal-delay="100">
           <div class="astro-media">
-            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }} nepali astrologer" loading="lazy" width="280" height="373">
             <div class="astro-overlay"></div>
           </div>
           <div class="card-body">

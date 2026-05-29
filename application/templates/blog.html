@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}nepali astrology blog — vedic astrology insights, kundali & rashifal guides{% endblock %}
+{% block seo_description %}read expert nepali astrology insights on vedic birth chart reading, janam kundali nepal, rashifal consultation, and practical jyotish guidance for modern life.{% endblock %}
+{% block seo_keywords %}nepali astrology predictions, vedic birth chart reading, kundali reading online, rashifal consultation, online jyotish consultation{% endblock %}
+{% block og_title %}nepali astrology blog — kundali and vedic astrology guides{% endblock %}
+{% block og_description %}discover practical vedic astrology nepal articles, kundali reading guides, and horoscope insights from nepali jyotish experts.{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section" data-reveal>
     <div class="container">
       <p class="section-label">journal</p>
-      <h1 class="section-heading">Astrology Blog</h1>
+      <h1 class="section-heading">nepali astrology blog for vedic astrology and kundali guidance</h1>
+      <p>explore long-form resources on janam kundali nepal, kundali matching nepal, and astrology reading in nepali language. ready for personal advice? <a href="/astrologers">book a nepali astrologer online consultation</a> or <a href="/contact">contact our team</a>.</p>
       <div class="section-divider"></div>
       <div class="blog-grid">
         {% for post in posts %}
         <article class="post-card {% if loop.index == 1 %}post-card-large{% endif %}" data-reveal data-reveal-delay="100">
-          <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }}" loading="lazy" width="640" height="360" />
+          <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }} nepali astrology article" loading="lazy" width="640" height="360" {% if loop.index == 1 %}fetchpriority="high"{% endif %}>
           <div class="post-body">
-            <h3>{{ post.title }}</h3>
+            <h2>{{ post.title }}</h2>
             <p>{{ post.excerpt }}</p>
-            <a class="btn-secondary" href="/blog/{{ post.slug }}">Read More</a>
+            <a class="btn-secondary" href="/blog/{{ post.slug }}">read this vedic astrology guide</a>
           </div>
         </article>
         {% endfor %}

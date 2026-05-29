@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}our nepali astrologers — vedic jyotish experts | nepaliastrology.com{% endblock %}
+{% block seo_description %}meet our team of expert nepali astrologers specialising in vedic astrology, kundali reading, rashifal, and vastu. book a personal consultation online today.{% endblock %}
+{% block seo_keywords %}nepali astrologer, nepali astrology, best vedic astrologer nepal, kundali reading online, online jyotish consultation, horoscope reading nepal{% endblock %}
+{% block og_title %}our nepali astrologers — vedic jyotish experts{% endblock %}
+{% block og_description %}browse verified nepali astrologers and book online astrology consultation in nepal for kundali, rashifal, and vastu guidance.{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section" data-reveal>
     <div class="container">
       <p class="section-label">astrologers</p>
-      <h1 class="section-heading">Our Astrologers</h1>
+      <h1 class="section-heading">our nepali astrologers for vedic astrology consultation</h1>
+      <p>find the right expert for kundali reading nepal, rashifal consultation, and online astrology nepal sessions. you can also explore our <a href="/blog">vedic astrology articles</a> or <a href="/contact">contact our team</a> for help choosing a specialist.</p>
       <div class="section-divider"></div>
       <div class="filter-bar">
         <button class="filter-pill active" data-filter="all" type="button">All Services</button>
@@ -22,16 +30,16 @@
         {% for astro in astrologers %}
         <div class="astro-card" data-services="{{ (services_map.get(astro.id, [])|join(' ') )|lower }}" data-reveal data-reveal-delay="100">
           <div class="astro-media">
-            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }}" loading="lazy" width="280" height="373" />
+            <img class="astro-photo" src="{{ astro.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astro.name }} nepali astrologer profile" loading="lazy" width="280" height="373" {% if loop.index == 1 %}fetchpriority="high"{% endif %}>
             <div class="astro-overlay"></div>
           </div>
           <div class="card-body">
-            <h3>{{ astro.name }}</h3>
+            <h2>{{ astro.name }}</h2>
             <p class="astro-title">{{ astro.title }}</p>
             <p class="astro-meta">{{ astro.languages|join(', ') }}</p>
             <p class="astro-meta">{{ astro.experience_years }} years</p>
             <div class="card-footer">
-              <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">Book Now</a>
+              <a class="btn-secondary" href="/astrologers/{{ astro.slug }}">book {{ astro.name }} for kundali reading</a>
             </div>
           </div>
         </div>

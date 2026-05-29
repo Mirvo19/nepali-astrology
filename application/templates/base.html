@@ -1,32 +1,99 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ seo.meta_title }} | nepaliastrology.com</title>
-  <meta name="description" content="{{ seo.meta_description }}" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="{{ seo.site_url }}{{ seo.current_path }}" />
-  <meta property="og:title" content="{{ seo.meta_title }}" />
-  <meta property="og:description" content="{{ seo.meta_description }}" />
-  <meta property="og:image" content="{{ seo.og_image }}" />
-  <meta property="og:url" content="{{ seo.site_url }}{{ seo.current_path }}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_NP" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block seo_title %}nepali astrology — vedic kundali readings & consultations online{% endblock %}</title>
+  <meta name="description" content="{% block seo_description %}connect with expert nepali astrologers for vedic kundali readings, rashifal, vastu, and jyotish consultations. book your online astrology session today.{% endblock %}">
+  <meta name="keywords" content="{% block seo_keywords %}nepali astrology, vedic astrology nepal, kundali reading, jyotish nepal, astrologer nepal{% endblock %}">
+  <meta name="robots" content="{% block seo_robots %}index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1{% endblock %}">
+  <meta name="author" content="nepali astrology">
+  <meta name="language" content="English">
+  <meta name="geo.region" content="NP">
+  <meta name="geo.country" content="Nepal">
+
+  <link rel="canonical" href="https://www.nepaliastrology.com{{ request.path }}">
+
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}nepali astrology — vedic kundali readings & consultations{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}connect with expert nepali astrologers for vedic kundali readings, rashifal, vastu, and jyotish consultations online.{% endblock %}">
+  <meta property="og:url" content="https://www.nepaliastrology.com{{ request.path }}">
+  <meta property="og:site_name" content="nepali astrology">
+  <meta property="og:image" content="{% block og_image %}{{ site_settings.og_image_url or 'https://www.nepaliastrology.com/static/assets/og-default.jpg' }}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="nepali astrology — vedic readings and consultations">
+  <meta property="og:locale" content="en_NP">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}nepali astrology — vedic kundali readings{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}connect with expert nepali astrologers for kundali readings, rashifal, and jyotish consultations online.{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{{ site_settings.og_image_url or 'https://www.nepaliastrology.com/static/assets/og-default.jpg' }}{% endblock %}">
+
+  {% block structured_data %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "nepali astrology",
-    "url": "https://nepaliastrology.com",
-    "telephone": "{{ seo.contact_phone }}",
-    "address": { "@type": "PostalAddress", "addressCountry": "NP" },
-    "image": "{{ seo.og_image }}"
+    "alternateName": "nepaliastrology.com",
+    "url": "https://www.nepaliastrology.com",
+    "logo": "https://www.nepaliastrology.com/static/assets/logo.png",
+    "image": "{{ site_settings.og_image_url or 'https://www.nepaliastrology.com/static/assets/og-default.jpg' }}",
+    "description": "expert nepali astrologers offering vedic kundali readings, rashifal, vastu, and jyotish consultations online and in nepal.",
+    "telephone": "{{ site_settings.contact_phone if site_settings else '' }}",
+    "email": "{{ site_settings.contact_email if site_settings else '' }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "NP",
+      "addressLocality": "Kathmandu"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "27.7172",
+      "longitude": "85.3240"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    "priceRange": "रू",
+    "currenciesAccepted": "NPR",
+    "paymentAccepted": "Credit Card, Cash",
+    "areaServed": ["Nepal", "India", "Global"],
+    "serviceType": ["Vedic Astrology", "Kundali Reading", "Rashifal", "Vastu", "Numerology", "Jyotish"],
+    "sameAs": [
+      "{{ site_settings.facebook_url if site_settings else '' }}",
+      "{{ site_settings.instagram_url if site_settings else '' }}",
+      "{{ site_settings.youtube_url if site_settings else '' }}"
+    ]
   }
   </script>
-  <link rel="stylesheet" href="{{ bust('css/main.css') }}" />
-  <link rel="icon" href="{{ bust('assets/favicon.ico') }}" />
+  {% endblock %}
+
+  <link rel="icon" type="image/x-icon" href="{{ bust('assets/favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/static/assets/site.webmanifest">
+  <meta name="theme-color" content="#080808">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300&family=Instrument+Sans:wght@300;400;500&display=swap">
+  {% block preload %}{% endblock %}
+
+  <style>
+    body { margin: 0; background: #080808; color: #e8e2d4; }
+    .site-header { position: fixed; top: 0; width: 100%; z-index: 200; }
+    .hero { min-height: 100svh; display: flex; align-items: center; }
+  </style>
+
+  <link rel="stylesheet" href="{{ bust('css/main.css') }}">
 </head>
 <body class="page-transition loading">
   {% include 'partials/icons.html' %}
@@ -81,7 +148,7 @@
       </div>
     </div>
     <form class="newsletter container" aria-label="Newsletter">
-      <input type="email" placeholder="Your email" />
+      <input type="email" placeholder="Your email">
       <button type="button" class="btn-primary">Join</button>
     </form>
   </footer>

@@ -1,13 +1,14 @@
 import os
+from datetime import datetime
 
-from flask import Blueprint, render_template, request, Response, redirect, url_for, current_app, jsonify
+from flask import Blueprint, render_template, request, make_response, redirect, url_for, current_app, jsonify
 from ...models.astrologers import list_astrologers, get_astrologer_by_slug
 from ...models.services import list_services
 from ...models.testimonials import list_testimonials
 from ...models.faqs import list_faqs
 from ...models.blog_posts import list_blog_posts, get_blog_post_by_slug
 from ...models.gallery import list_gallery
-from ...utils.seo import render_seo, generate_sitemap, generate_robots
+from ...utils.seo import render_seo
 
 public_bp = Blueprint("public", __name__)
 
@@ -125,11 +126,67 @@ def favicon():
 
 @public_bp.route("/sitemap.xml")
 def sitemap():
-    xml = generate_sitemap()
-    return Response(xml, mimetype="application/xml")
+    pages = []
+    base = "https://www.nepaliastrology.com"
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+
+    static_pages = [
+        {"url": base + "/", "priority": "1.0", "changefreq": "weekly", "lastmod": today},
+        {"url": base + "/astrologers", "priority": "0.9", "changefreq": "weekly", "lastmod": today},
+        {"url": base + "/about", "priority": "0.7", "changefreq": "monthly", "lastmod": today},
+        {"url": base + "/contact", "priority": "0.6", "changefreq": "monthly", "lastmod": today},
+        {"url": base + "/blog", "priority": "0.8", "changefreq": "daily", "lastmod": today},
+    ]
+    pages.extend(static_pages)
+
+    try:
+        for astrologer in list_astrologers(active_only=True):
+            pages.append(
+                {
+                    "url": f"{base}/astrologers/{astrologer['slug']}",
+                    "priority": "0.8",
+                    "changefreq": "weekly",
+                    "lastmod": today,
+                }
+            )
+    except Exception:
+        pass
+
+    try:
+        for post in list_blog_posts(published_only=True):
+            published = post.get("published_at")
+            lastmod = published[:10] if published else today
+            pages.append(
+                {
+                    "url": f"{base}/blog/{post['slug']}",
+                    "priority": "0.7",
+                    "changefreq": "monthly",
+                    "lastmod": lastmod,
+                }
+            )
+    except Exception:
+        pass
+
+    xml = render_template("sitemap.xml", pages=pages)
+    response = make_response(xml)
+    response.headers["Content-Type"] = "application/xml"
+    response.headers["Cache-Control"] = "public, max-age=86400"
+    return response
 
 
 @public_bp.route("/robots.txt")
 def robots():
-    content = generate_robots()
-    return Response(content, mimetype="text/plain")
+    content = """User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /book/
+Disallow: /checkout/
+
+Sitemap: https://www.nepaliastrology.com/sitemap.xml
+"""
+    response = make_response(content)
+    response.headers["Content-Type"] = "text/plain"
+    response.headers["Cache-Control"] = "public, max-age=86400"
+    return response

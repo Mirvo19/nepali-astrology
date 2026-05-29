@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}contact nepali astrology — book online astrology consultation nepal{% endblock %}
+{% block seo_description %}contact nepali astrology in kathmandu for kundali reading nepal, rashifal consultation, vastu consultation nepal, and online jyotish consultation support.{% endblock %}
+{% block seo_keywords %}contact nepali astrologer, astrology consultation nepal, online astrology nepal, kundali reading nepal, numerology nepal{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section contact" data-reveal>
     <div class="container">
       <p class="section-label">contact</p>
-      <h1 class="section-heading">Contact Us</h1>
+      <h1 class="section-heading">contact nepali astrology for kundali and jyotish consultation</h1>
+      <p>send your query and our team will help you choose the right service, from vedic birth chart reading to tarot reading nepal and vastu guidance. you can also <a href="/astrologers">book a nepali astrologer online consultation</a> or <a href="/blog">read our astrology guides</a>.</p>
       <div class="section-divider"></div>
       <div class="contact-grid">
         <form id="contact-form">
           <label for="contact-name">Full name</label>
-          <input id="contact-name" type="text" name="name" placeholder="Full name" required />
+          <input id="contact-name" type="text" name="name" placeholder="Full name" required>
           <label for="contact-email">Email</label>
-          <input id="contact-email" type="email" name="email" placeholder="Email" required />
+          <input id="contact-email" type="email" name="email" placeholder="Email" required>
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" placeholder="How can we help?" required></textarea>
           <button type="submit" class="btn-primary">Send Message</button>
           <div class="form-status" id="contact-status"></div>
         </form>
         <div class="contact-details">
+          <h2>visit or contact our astrology consultation center in nepal</h2>
           <p>{{ site_settings.contact_address }}</p>
           <p>{{ site_settings.contact_phone }}</p>
           <p>{{ site_settings.contact_email }}</p>

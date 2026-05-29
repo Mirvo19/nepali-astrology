@@ -1,11 +1,34 @@
 {% extends "base.html" %}
-{% block title %}{{ astrologer.name }} | nepali astrology{% endblock %}
+
+{% block seo_title %}{{ astrologer.name }} — {{ astrologer.title }} | nepali astrology{% endblock %}
+{% block seo_description %}book a vedic astrology session with {{ astrologer.name }}, {{ astrologer.title }} with {{ astrologer.experience_years }} years of experience. specialises in kundali reading, rashifal, and jyotish consultations.{% endblock %}
+{% block og_type %}profile{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ astrologer.name|tojson }},
+  "jobTitle": {{ astrologer.title|tojson }},
+  "description": {{ astrologer.bio|default('', true)|tojson }},
+  "image": {{ astrologer.photo_url|default('', true)|tojson }},
+  "worksFor": {
+    "@type": "Organization",
+    "name": "nepali astrology",
+    "url": "https://www.nepaliastrology.com"
+  },
+  "url": "https://www.nepaliastrology.com/astrologers/{{ astrologer.slug }}",
+  "knowsAbout": ["vedic astrology", "kundali reading", "jyotish", "rashifal", "vastu"]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <main class="page-content">
   <div class="container">
     <div class="profile-grid">
       <div class="profile-sidebar">
-        {% if astrologer.photo_url %}<img src="{{ astrologer.photo_url }}" alt="{{ astrologer.name }}" class="profile-photo">{% endif %}
+        {% if astrologer.photo_url %}<img src="{{ astrologer.photo_url }}" alt="{{ astrologer.name }} nepali astrologer" class="profile-photo" width="360" height="480" fetchpriority="high">{% endif %}
         <h1>{{ astrologer.name }}</h1>
         <p class="profile-title">{{ astrologer.title }}</p>
         {% if astrologer.languages %}<p>{{ astrologer.languages | join(', ') }}</p>{% endif %}
@@ -13,6 +36,7 @@
       </div>
       <div class="profile-main">
         <p class="profile-bio">{{ astrologer.bio }}</p>
+        <p>explore <a href="/astrologers">all nepali astrologers</a> or <a href="/blog">read kundali reading guides</a>.</p>
         {% if services %}
         <h2>services</h2>
         <div class="services-list">

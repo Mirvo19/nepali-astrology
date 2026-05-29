@@ -1,4 +1,50 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}{{ astrologer.name }} — {{ astrologer.title }} | nepali astrology{% endblock %}
+{% block seo_description %}book a vedic astrology session with {{ astrologer.name }}, {{ astrologer.title }} with {{ astrologer.experience_years }} years of experience. specialises in kundali reading, rashifal, and jyotish consultations.{% endblock %}
+{% block seo_keywords %}nepali astrologer, {{ astrologer.name }}, astrology consultation nepal, kundali reading nepal, online jyotish consultation{% endblock %}
+{% block og_type %}profile{% endblock %}
+{% block og_title %}{{ astrologer.name }} — nepali astrologer profile{% endblock %}
+{% block og_description %}consult {{ astrologer.name }} for vedic birth chart reading, rashifal guidance, and astrology consultation nepal.{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ astrologer.name|tojson }},
+  "jobTitle": {{ astrologer.title|tojson }},
+  "description": {{ astrologer.bio|default('', true)|tojson }},
+  "image": {{ astrologer.photo_url|default('', true)|tojson }},
+  "worksFor": {
+    "@type": "Organization",
+    "name": "nepali astrology",
+    "url": "https://www.nepaliastrology.com"
+  },
+  "url": "https://www.nepaliastrology.com/astrologers/{{ astrologer.slug }}",
+  "knowsAbout": ["vedic astrology", "kundali reading", "jyotish", "rashifal", "vastu"]
+}
+</script>
+{% for service in services %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": {{ service.name|tojson }},
+  "provider": {
+    "@type": "Person",
+    "name": {{ astrologer.name|tojson }}
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ service.price_npr }}",
+    "priceCurrency": "NPR"
+  },
+  "description": {{ service.description|default('', true)|tojson }}
+}
+</script>
+{% endfor %}
+{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section" data-reveal>
@@ -7,12 +53,13 @@
       <div class="profile">
         <div>
           <div class="profile-photo">
-            <img src="{{ astrologer.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astrologer.name }}" loading="lazy" width="360" height="480" />
+            <img src="{{ astrologer.photo_url or bust('assets/placeholder.svg') }}" alt="{{ astrologer.name }} nepali astrologer for vedic astrology nepal" width="360" height="480" fetchpriority="high">
           </div>
           <div class="profile-card">
-            <h1 class="section-heading">{{ astrologer.name }}</h1>
+            <h1 class="section-heading">{{ astrologer.name }} — nepali astrologer online consultation</h1>
             <p class="astro-title">{{ astrologer.title }}</p>
             <p>{{ astrologer.bio }}</p>
+            <p>for guidance on janam kundali nepal, horoscope reading nepal, and online astrology nepal sessions, you can <a href="/contact">contact our team</a> or <a href="/astrologers">view all nepali astrologers</a>.</p>
             <div class="hero-stats">
               {% for language in astrologer.languages %}
               <span class="badge badge-neutral">{{ language }}</span>
@@ -23,35 +70,25 @@
         </div>
         <div>
           <p class="section-label">services</p>
-          <h2 class="section-heading">Consultations</h2>
+          <h2 class="section-heading">vedic astrology services and kundali reading options</h2>
           <div class="section-divider"></div>
           <div class="card-grid">
             {% for service in services %}
             <div class="service-card">
               <div>
-                <h4>{{ service.name }}</h4>
+                <h3>{{ service.name }}</h3>
                 <p class="service-description">{{ service.description }}</p>
                 <span class="badge badge-neutral">{{ service.duration_minutes }} mins</span>
               </div>
               <div>
                 <div class="service-price">रू {{ service.price_npr }}</div>
-                <a class="btn-secondary" href="/book/{{ astrologer.slug }}/{{ service.id }}">Book</a>
+                <a class="btn-secondary" href="/book/{{ astrologer.slug }}/{{ service.id }}">book {{ service.name|lower }}</a>
               </div>
             </div>
             {% endfor %}
           </div>
         </div>
       </div>
-      <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "{{ astrologer.name }}",
-        "jobTitle": "{{ astrologer.title }}",
-        "image": "{{ astrologer.photo_url }}",
-        "url": "https://nepaliastrology.com/astrologers/{{ astrologer.slug }}"
-      }
-      </script>
       <div class="availability" data-astrologer="{{ astrologer.id }}" data-service="{{ services[0].id if services else '' }}"></div>
       {% else %}
       <p>Astrologer not found.</p>

@@ -1,4 +1,44 @@
 {% extends 'base.html' %}
+
+{% block seo_title %}{{ post.meta_title or post.title }} | nepali astrology{% endblock %}
+{% block seo_description %}{{ post.meta_description or post.excerpt }}{% endblock %}
+{% block seo_keywords %}nepali astrology, vedic astrology nepal, kundali reading online, nepali jyotish, astrology consultation nepal{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.meta_title or post.title }} | nepali astrology{% endblock %}
+{% block og_description %}{{ post.meta_description or post.excerpt }}{% endblock %}
+{% block twitter_title %}{{ post.meta_title or post.title }} | nepali astrology{% endblock %}
+{% block twitter_description %}{{ post.meta_description or post.excerpt }}{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ post.title|tojson }},
+  "description": {{ (post.excerpt or post.meta_description or '')|tojson }},
+  "image": {{ (post.cover_image_url or 'https://www.nepaliastrology.com/static/assets/og-default.jpg')|tojson }},
+  "author": {
+    "@type": "Organization",
+    "name": "nepali astrology",
+    "url": "https://www.nepaliastrology.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "nepali astrology",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.nepaliastrology.com/static/assets/logo.png"
+    }
+  },
+  "datePublished": "{{ post.published_at }}",
+  "dateModified": "{{ post.created_at }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.nepaliastrology.com/blog/{{ post.slug }}"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="page-content">
   <section class="section" data-reveal>
@@ -7,19 +47,10 @@
       <article class="blog-post">
         <p class="section-label">journal</p>
         <h1 class="section-heading">{{ post.title }}</h1>
+        <p>this article covers practical insights in nepali astrology, vedic birth chart reading, and kundali guidance. for personalised support, <a href="/astrologers">book a vedic astrology consultation</a> or <a href="/contact">talk to our team</a>.</p>
         <div class="section-divider"></div>
-        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }}" loading="lazy" width="960" height="540" />
+        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }} vedic astrology nepal" loading="eager" fetchpriority="high" width="960" height="540">
         <div class="post-content">{{ post.content|safe }}</div>
-        <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": "{{ post.title }}",
-          "image": "{{ post.cover_image_url }}",
-          "datePublished": "{{ post.published_at }}",
-          "author": {"@type": "Organization", "name": "Nepali Astrology"}
-        }
-        </script>
       </article>
       {% else %}
       <p>Post not found.</p>
