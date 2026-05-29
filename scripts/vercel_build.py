@@ -7,16 +7,10 @@ app_dir = root / "application"
 
 
 def _sync_tree(src: Path, dst: Path) -> None:
-    if not src.exists():
-        return
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    if dst.exists():
-        shutil.rmtree(dst)
-    shutil.copytree(src, dst)
+    # Copying disabled: we now point Vercel at `application/static` and
+    # include `application/**` in the Python lambda bundle. Keeping this
+    # helper for compatibility but not performing any filesystem writes.
+    return
 
 
-_sync_tree(app_dir / "static", root / "public" / "static")
-_sync_tree(app_dir / "templates", root / "templates")
-
-print("vercel build: copied application/static -> public/static")
-print("vercel build: copied application/templates -> templates/")
+print("vercel build: copy disabled — using application/static and application/templates directly")
