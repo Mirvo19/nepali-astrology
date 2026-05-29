@@ -1,20 +1,13 @@
 from flask import Flask, render_template, session, request
 from pathlib import Path
 from .config import Config
+import os
 
 _PKG_DIR = Path(__file__).resolve().parent
-_ROOT_DIR = _PKG_DIR.parent
 
-
-def _resolve_dir(name: str) -> str:
-    """Prefer package paths; fall back to repo root (Vercel build copies templates/ there)."""
-    primary = _PKG_DIR / name
-    if primary.is_dir():
-        return str(primary)
-    fallback = _ROOT_DIR / name
-    if fallback.is_dir():
-        return str(fallback)
-    return str(primary)
+# Always use absolute paths within application package
+_STATIC_FOLDER = os.path.join(str(_PKG_DIR), "static")
+_TEMPLATE_FOLDER = os.path.join(str(_PKG_DIR), "templates")
 
 
 try:
@@ -44,8 +37,8 @@ def create_app():
         )
     app = Flask(
         __name__,
-        static_folder=_resolve_dir("static"),
-        template_folder=_resolve_dir("templates"),
+        static_folder=_STATIC_FOLDER,
+        template_folder=_TEMPLATE_FOLDER,
     )
     app.config.from_object(Config)
     Config.validate()

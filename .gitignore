@@ -84,6 +84,9 @@ htmlcov/
 .next
 public/static/
 
+# Backup folders
+templates/
+
 # macOS
 .AppleDouble
 .LSOverride
