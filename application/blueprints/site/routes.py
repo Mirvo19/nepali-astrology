@@ -178,11 +178,12 @@ def sitemap():
 def robots():
     content = """User-agent: *
 Allow: /
+Disallow: /admin
 Disallow: /admin/
-Disallow: /admin/*
 Disallow: /api/
 Disallow: /book/
 Disallow: /checkout/
+Disallow: /booking-confirmed/
 
 Sitemap: https://www.nepaliastrology.com/sitemap.xml
 """
