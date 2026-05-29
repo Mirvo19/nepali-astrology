@@ -88,6 +88,8 @@ public/static/
 
 # Backup folders
 templates/
+!application/templates/
+!application/templates/**
 
 # macOS
 .AppleDouble

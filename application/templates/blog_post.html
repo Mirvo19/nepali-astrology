@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section" data-reveal>
+    <div class="container">
+      {% if post %}
+      <article class="blog-post">
+        <p class="section-label">journal</p>
+        <h1 class="section-heading">{{ post.title }}</h1>
+        <div class="section-divider"></div>
+        <img src="{{ post.cover_image_url or bust('assets/placeholder.svg') }}" alt="{{ post.title }}" loading="lazy" width="960" height="540" />
+        <div class="post-content">{{ post.content|safe }}</div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{ post.title }}",
+          "image": "{{ post.cover_image_url }}",
+          "datePublished": "{{ post.published_at }}",
+          "author": {"@type": "Organization", "name": "Nepali Astrology"}
+        }
+        </script>
+      </article>
+      {% else %}
+      <p>Post not found.</p>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

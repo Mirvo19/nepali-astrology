@@ -40,7 +40,7 @@ def home():
     posts = list_blog_posts(published_only=True)[:3]
     gallery = list_gallery(visible_only=True)
     return render_template(
-        "public/home.html",
+        "home.html",
         astrologers=astrologers,
         testimonials=testimonials,
         faqs=faqs,
@@ -58,7 +58,7 @@ def astrologers():
     for service in services:
         services_map.setdefault(service["astrologer_id"], []).append(service["name"])
     return render_template(
-        "public/astrologers.html",
+        "astrologers.html",
         astrologers=astrologers_list,
         services=services,
         service_names=service_names,
@@ -76,7 +76,7 @@ def astrologer_profile(slug):
         meta_override={"meta_title": astrologer.get("name") if astrologer else "Astrologer"},
     )
     return render_template(
-        "public/astrologer_profile.html",
+        "astrologer_profile.html",
         astrologer=astrologer,
         services=services,
         seo=seo,
@@ -91,7 +91,7 @@ def blog_index():
         current_path=request.path,
         meta_override={"meta_title": "Astrology Blog"},
     )
-    return render_template("public/blog.html", posts=posts, seo=seo)
+    return render_template("blog.html", posts=posts, seo=seo)
 
 
 @public_bp.route("/blog/<slug>")
@@ -104,18 +104,18 @@ def blog_post(slug):
         current_path=request.path,
         meta_override={"meta_title": meta_title, "meta_description": meta_description},
     )
-    return render_template("public/blog_post.html", post=post, seo=seo)
+    return render_template("blog_post.html", post=post, seo=seo)
 
 
 @public_bp.route("/about")
 def about():
     astrologers_list = list_astrologers(active_only=True)
-    return render_template("public/about.html", astrologers=astrologers_list)
+    return render_template("about.html", astrologers=astrologers_list)
 
 
 @public_bp.route("/contact")
 def contact():
-    return render_template("public/contact.html")
+    return render_template("contact.html")
 
 
 @public_bp.route("/favicon.ico")

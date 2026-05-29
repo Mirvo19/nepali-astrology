@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+{% block title %}booking detail{% endblock %}
+{% block page_title %}booking detail{% endblock %}
+{% block content %}
+<section class="admin-panel">
+  <div class="admin-card">
+    <h2>{{ booking.booking_ref if booking else 'booking' }}</h2>
+    {% if booking %}
+    <dl class="detail-list">
+      <dt>client</dt><dd>{{ booking.client_name }}</dd>
+      <dt>email</dt><dd>{{ booking.client_email }}</dd>
+      <dt>phone</dt><dd>{{ booking.client_phone }}</dd>
+      <dt>astrologer</dt><dd>{{ booking.astrologer_name or booking.astrologer_id }}</dd>
+      <dt>service</dt><dd>{{ booking.service_name or booking.service_id }}</dd>
+      <dt>appointment</dt><dd>{{ booking.appointment_date }} {{ booking.appointment_time }}</dd>
+      <dt>status</dt><dd>{{ booking.status }}</dd>
+      <dt>payment</dt><dd>{{ booking.payment_status }}</dd>
+      <dt>amount</dt><dd>रू {{ booking.amount_npr }}</dd>
+    </dl>
+    {% endif %}
+  </div>
+  <form class="admin-form" method="post" action="{{ request.url }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token if session.csrf_token else '' }}">
+    <input type="hidden" name="booking_id" value="{{ booking.id if booking else '' }}">
+    <div class="form-grid">
+      <div class="field-group">
+        <label for="status">status</label>
+        <select id="status" name="status">
+          {% for value in ['pending', 'confirmed', 'completed', 'cancelled'] %}
+          <option value="{{ value }}" {% if booking and booking.status == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="payment_status">payment status</label>
+        <select id="payment_status" name="payment_status">
+          {% for value in ['unpaid', 'paid', 'refunded'] %}
+          <option value="{{ value }}" {% if booking and booking.payment_status == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary" type="submit">update booking</button>
+  </form>
+</section>
+{% endblock %}

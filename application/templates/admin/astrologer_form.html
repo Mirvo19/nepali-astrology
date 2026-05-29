@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% block title %}astrologer form{% endblock %}
+{% block page_title %}astrologer form{% endblock %}
+{% block content %}
+<section class="admin-panel">
+  <form class="admin-form" method="post" enctype="multipart/form-data" action="{{ request.url }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token if session.csrf_token else '' }}">
+    <div class="form-grid">
+      <div class="field-group">
+        <label for="name">name</label>
+        <input id="name" name="name" type="text" value="{{ astrologer.name if astrologer else '' }}" required>
+      </div>
+      <div class="field-group">
+        <label for="slug">slug</label>
+        <input id="slug" name="slug" type="text" value="{{ astrologer.slug if astrologer else '' }}">
+      </div>
+      <div class="field-group">
+        <label for="title">title</label>
+        <input id="title" name="title" type="text" value="{{ astrologer.title if astrologer else '' }}">
+      </div>
+      <div class="field-group">
+        <label for="experience_years">experience years</label>
+        <input id="experience_years" name="experience_years" type="number" min="0" value="{{ astrologer.experience_years if astrologer else 0 }}">
+      </div>
+      <div class="field-group field-group--full">
+        <label for="bio">bio</label>
+        <textarea id="bio" name="bio" rows="8">{{ astrologer.bio if astrologer else '' }}</textarea>
+      </div>
+      <div class="field-group field-group--full">
+        <label for="languages">languages</label>
+        <input id="languages" name="languages" type="text" value="{{ astrologer.languages | join(', ') if astrologer and astrologer.languages else '' }}" placeholder="Nepali, English">
+      </div>
+      <div class="field-group">
+        <label for="photo">photo</label>
+        <input id="photo" name="photo" type="file" accept="image/*">
+      </div>
+      <div class="field-group checkbox-field">
+        <label><input type="checkbox" name="is_active" {% if astrologer is not defined or astrologer.is_active %}checked{% endif %}> active</label>
+      </div>
+    </div>
+    <button class="btn-primary" type="submit">save astrologer</button>
+  </form>
+</section>
+{% endblock %}

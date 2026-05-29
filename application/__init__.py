@@ -74,31 +74,17 @@ def create_app():
     def not_found(error):
         logger.warning(f"404 error: {request.path}")
         try:
-            return render_template("public/404.html"), 404
+            return render_template("404.html"), 404
         except Exception:
-            return """<!doctype html>
-<html lang="en">
-<head><meta charset="utf-8"><title>page not found</title>
-<style>body{background:#080808;color:#e8e2d4;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;flex-direction:column;gap:16px;}
-h1{font-size:48px;color:#c4a050;margin:0;}p{color:#9a9080;margin:0;}</style></head>
-<body><h1>404</h1><p>this page does not exist.</p>
-<a href="/" style="color:#c4a050;text-decoration:none;font-size:14px;">← return home</a></body>
-</html>""", 404
+            return '<h1 style="font-family:sans-serif;text-align:center;padding:80px">404 — page not found <br><a href="/">home</a></h1>', 404
 
     @app.errorhandler(500)
     def server_error(error):
         logger.error(f"500 error: {error}", exc_info=True)
         try:
-            return render_template("public/500.html"), 500
+            return render_template("500.html"), 500
         except Exception:
-            return """<!doctype html>
-<html lang="en">
-<head><meta charset="utf-8"><title>server error</title>
-<style>body{background:#080808;color:#e8e2d4;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;flex-direction:column;gap:16px;}
-h1{font-size:48px;color:#c4a050;margin:0;}p{color:#9a9080;margin:0;}</style></head>
-<body><h1>500</h1><p>something went wrong. please try again shortly.</p>
-<a href="/" style="color:#c4a050;text-decoration:none;font-size:14px;">← return home</a></body>
-</html>""", 500
+            return '<h1 style="font-family:sans-serif;text-align:center;padding:80px">500 — server error <br><a href="/">home</a></h1>', 500
 
     @app.after_request
     def set_cache_headers(response):

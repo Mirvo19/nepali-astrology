@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ astrologer.name }} | nepali astrology{% endblock %}
+{% block content %}
+<main class="page-content">
+  <div class="container">
+    <div class="profile-grid">
+      <div class="profile-sidebar">
+        {% if astrologer.photo_url %}<img src="{{ astrologer.photo_url }}" alt="{{ astrologer.name }}" class="profile-photo">{% endif %}
+        <h1>{{ astrologer.name }}</h1>
+        <p class="profile-title">{{ astrologer.title }}</p>
+        {% if astrologer.languages %}<p>{{ astrologer.languages | join(', ') }}</p>{% endif %}
+        {% if astrologer.experience_years %}<p>{{ astrologer.experience_years }}+ years experience</p>{% endif %}
+      </div>
+      <div class="profile-main">
+        <p class="profile-bio">{{ astrologer.bio }}</p>
+        {% if services %}
+        <h2>services</h2>
+        <div class="services-list">
+          {% for s in services %}
+          <div class="card-service">
+            <div class="service-info">
+              <h3>{{ s.name }}</h3>
+              <p>{{ s.description }}</p>
+              <span class="badge badge-neutral">{{ s.duration_minutes }} min</span>
+            </div>
+            <div class="service-action">
+              <p class="service-price">रू {{ s.price_npr }}</p>
+              <a href="{{ url_for('bookings.book', astrologer_slug=astrologer.slug, service_id=s.id) }}" class="btn-primary">book</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

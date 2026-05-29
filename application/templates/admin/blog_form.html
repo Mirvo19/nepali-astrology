@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% block title %}blog form{% endblock %}
+{% block page_title %}blog form{% endblock %}
+{% block content %}
+<section class="admin-panel">
+  <form class="admin-form" method="post" enctype="multipart/form-data" action="{{ request.url }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token if session.csrf_token else '' }}">
+    <div class="form-grid">
+      <div class="field-group">
+        <label for="title">title</label>
+        <input id="title" name="title" type="text" value="{{ post.title if post else '' }}" required>
+      </div>
+      <div class="field-group">
+        <label for="slug">slug</label>
+        <input id="slug" name="slug" type="text" value="{{ post.slug if post else '' }}">
+      </div>
+      <div class="field-group field-group--full">
+        <label for="excerpt">excerpt</label>
+        <textarea id="excerpt" name="excerpt" rows="3">{{ post.excerpt if post else '' }}</textarea>
+      </div>
+      <div class="field-group field-group--full">
+        <label for="content">content</label>
+        <textarea id="content" name="content" rows="12">{{ post.content if post else '' }}</textarea>
+      </div>
+      <div class="field-group">
+        <label for="cover_image">cover image</label>
+        <input id="cover_image" name="cover_image" type="file" accept="image/*">
+      </div>
+      <div class="field-group">
+        <label for="meta_title">meta title</label>
+        <input id="meta_title" name="meta_title" type="text" value="{{ post.meta_title if post else '' }}">
+      </div>
+      <div class="field-group field-group--full">
+        <label for="meta_description">meta description</label>
+        <textarea id="meta_description" name="meta_description" rows="3">{{ post.meta_description if post else '' }}</textarea>
+      </div>
+      <div class="field-group checkbox-field">
+        <label><input type="checkbox" name="is_published" {% if post is not defined or post.is_published %}checked{% endif %}> published</label>
+      </div>
+    </div>
+    <button class="btn-primary" type="submit">save post</button>
+  </form>
+</section>
+{% endblock %}

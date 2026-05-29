@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-content">
+  <section class="section contact" data-reveal>
+    <div class="container">
+      <p class="section-label">contact</p>
+      <h1 class="section-heading">Contact Us</h1>
+      <div class="section-divider"></div>
+      <div class="contact-grid">
+        <form id="contact-form">
+          <label for="contact-name">Full name</label>
+          <input id="contact-name" type="text" name="name" placeholder="Full name" required />
+          <label for="contact-email">Email</label>
+          <input id="contact-email" type="email" name="email" placeholder="Email" required />
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" placeholder="How can we help?" required></textarea>
+          <button type="submit" class="btn-primary">Send Message</button>
+          <div class="form-status" id="contact-status"></div>
+        </form>
+        <div class="contact-details">
+          <p>{{ site_settings.contact_address }}</p>
+          <p>{{ site_settings.contact_phone }}</p>
+          <p>{{ site_settings.contact_email }}</p>
+          <iframe title="Map" loading="lazy" src="https://maps.google.com/maps?q={{ site_settings.contact_address|urlencode }}&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
