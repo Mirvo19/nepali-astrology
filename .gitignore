@@ -6,6 +6,7 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
 *$py.class
 *.so
 .Python
@@ -32,7 +33,7 @@ MANIFEST
 venv/
 ENV/
 env/
-.venv
+.venv/
 
 # Flask
 instance/
@@ -40,6 +41,7 @@ instance/
 *.db
 *.sqlite
 *.sqlite3
+application/static/uploads/
 
 # Session Files
 flask_session/

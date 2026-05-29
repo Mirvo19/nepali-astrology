@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, Response, redirect, url_for
+import os
+
+from flask import Blueprint, render_template, request, Response, redirect, url_for, current_app, jsonify
 from ...models.astrologers import list_astrologers, get_astrologer_by_slug
 from ...models.services import list_services
 from ...models.testimonials import list_testimonials
@@ -8,6 +10,26 @@ from ...models.gallery import list_gallery
 from ...utils.seo import render_seo, generate_sitemap, generate_robots
 
 public_bp = Blueprint("public", __name__)
+
+
+@public_bp.route("/debug-templates")
+def debug_templates():
+    tf = current_app.template_folder
+    results = {
+        "template_folder_config": tf,
+        "template_folder_resolved": os.path.abspath(tf) if tf else None,
+        "template_folder_exists": os.path.isdir(tf) if tf else False,
+        "cwd": os.getcwd(),
+        "var_task_contents": os.listdir("/var/task") if os.path.exists("/var/task") else [],
+        "files_found": []
+    }
+    if tf and os.path.isdir(tf):
+        for root, dirs, files in os.walk(tf):
+            for f in files:
+                results["files_found"].append(
+                    os.path.join(root, f).replace(tf, "")
+                )
+    return jsonify(results)
 
 
 @public_bp.route("/")

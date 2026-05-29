@@ -1,19 +1,13 @@
-from flask import Flask, render_template, session, request
-from pathlib import Path
-from .config import Config
 import os
 
-_PKG_DIR = Path(__file__).resolve().parent
+from flask import Flask, render_template, session, request
 
-# Always use absolute paths within application package
-_STATIC_FOLDER = os.path.join(str(_PKG_DIR), "static")
-_TEMPLATE_FOLDER = os.path.join(str(_PKG_DIR), "templates")
+from .config import Config
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-try:
-    from .blueprints.site.routes import public_bp
-except ModuleNotFoundError:
-    from .blueprints.public.routes import public_bp
+from .blueprints.site.routes import public_bp
 
 from .blueprints.bookings.routes import bookings_bp
 from .blueprints.admin.routes import admin_bp
@@ -37,8 +31,8 @@ def create_app():
         )
     app = Flask(
         __name__,
-        static_folder=_STATIC_FOLDER,
-        template_folder=_TEMPLATE_FOLDER,
+        template_folder=os.path.join(BASE_DIR, "templates"),
+        static_folder=os.path.join(BASE_DIR, "static"),
     )
     app.config.from_object(Config)
     Config.validate()
