@@ -83,7 +83,6 @@ htmlcov/
 .vercel
 .next
 public/static/
-templates/
 
 # macOS
 .AppleDouble
